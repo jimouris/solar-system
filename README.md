@@ -1,7 +1,7 @@
 # Solar System
 An imaginary solar system implemented in opengl
 
-To install opengl in Ubuntu you need the following liibraries:
+##### To install opengl in Ubuntu you need the following liibraries:
 1. freeglut3
 2. freeglut3-dev
 3. libglew1.5
@@ -12,4 +12,3 @@ To install opengl in Ubuntu you need the following liibraries:
 8. libgl1-mesa-dev
 
 Then just type "make" in order to compile the project.
-
