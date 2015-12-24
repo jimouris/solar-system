@@ -239,11 +239,20 @@ void ReadFile(model *md, char *path) {
 			 //    vector<string> tokens;
 			 //    copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(tokens));
 
-				// float x, y, z;
-			    /* line: "v noumero1 noumero2 noumero3 "*/
-				/* prepei na ginei parse se 3 floats ta 3 noumera */
+				float x,y,z;
+				string::size_type sz,sz2;
 
-				cout << line;
+
+				string temp=line.substr(3);
+				x=stod(temp,&sz);
+				y=stod(temp.substr(sz),&sz2);
+				z=stod(temp.substr(sz+sz2));
+				//cout << temp << endl;
+				cout << x << endl;
+				cout << y << endl;
+				cout << z << endl;
+
+				//cout << line;
 				exit(1);
 			} else if (line.find("vn ") == 0) {
 			    // std::cout << "String starts with vn\n";
