@@ -3,7 +3,7 @@ SOURCE	= main.cpp visuals.cpp
 HEADER  = visuals.h
 OUT  	= a.out
 CC		= g++
-FLAGS 	= -g -Wall -O2
+FLAGS 	= -g -Wall -O2 -std=c++11
 LIBS = -lglut -lGL -lGLU -lGLEW -lm
 # -g option enables debugging mode 
 # -c flag generates object code for separate files
