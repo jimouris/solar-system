@@ -17,8 +17,8 @@ typedef struct face {
 } face;
 
 typedef struct model {
-	point obj_points[9122];
-	face obj_faces[18240];
+	point obj_points[10];
+	face obj_faces[4];
 	int vertices;
 	int faces;
 } model;
