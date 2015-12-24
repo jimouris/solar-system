@@ -1,23 +1,54 @@
 #ifndef __VISUALS__
 #define __VISUALS__ 
 
+#include <stdio.h>     // - Just for some ASCII messages
+#include <string.h>
+#include <math.h>
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
 #define RED 1
 #define GREEN 2
 #define BLUE 3
 #define WHITE 4
 
-typedef struct point {
+class Point {
 	float x; 
 	float y; 
-	float z; 
-} point;
+	float z;
+public:
+	Point(float, float, float);
+	~Point();
+};
+
+class Faces {
+	Point *p1;
+	Point *p2;
+	Point *p3;
+public:
+	Faces(float, float, float, float, float, float, float, float, float);
+	~Faces();
+};
+
+class myModel {
+	vector <Point> v;
+	vector <Point> vn;
+	vector <Faces> f;
+public:
+	myModel();
+	~myModel();
+
+};
 
 typedef struct face {
 	int vtx[3];
 } face;
 
 typedef struct model {
-	point obj_points[10];
+	// Point obj_points[10];
 	face obj_faces[4];
 	int vertices;
 	int faces;
@@ -39,7 +70,7 @@ void Setup();
 
 void Idle();
 
-void ReadFile(model*);
+void ReadFile(model *, char *);
 //Function for reading a model file
 
 void DisplayModel(model);
