@@ -1,3 +1,6 @@
+#ifndef __VISUALS__
+#define __VISUALS__ 
+
 #define RED 1
 #define GREEN 2
 #define BLUE 3
@@ -53,3 +56,4 @@ void Mouse(int button,int state,int x,int y);
 
 void MenuSelect(int choice);
 
+#endif
