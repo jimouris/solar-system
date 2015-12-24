@@ -6,25 +6,22 @@
 #define BLUE 3
 #define WHITE 4
 
-struct point 
-{
+typedef struct point {
 	float x; 
 	float y; 
 	float z; 
-};
+} point;
 
-struct face
-{
+typedef struct face {
 	int vtx[3];
-};
+} face;
 
-struct model
-{
-	point obj_points[10];
-	face obj_faces[4];
+typedef struct model {
+	point obj_points[9122];
+	face obj_faces[18240];
 	int vertices;
 	int faces;
-};
+} model;
 
 
 //-------- Functions --------------------------------

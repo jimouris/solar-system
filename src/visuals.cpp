@@ -17,105 +17,89 @@ static float blue = 0.0;
 
 using namespace std;
 
-void keimeno(const char *str,float size)
-{
-
+void keimeno(const char *str, float size) {
 	glPushMatrix();
 	glScalef(size,size,size);
 
-	for (size_t i=0;i<strlen(str);i++)
-	  glutStrokeCharacter(GLUT_STROKE_ROMAN,str[i]);
+	for (size_t i=0;i<strlen(str);i++) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN,str[i]);
+	}
 	glPopMatrix();
-
 }
 
-void Render()
-{    
-  //CLEARS FRAME BUFFER ie COLOR BUFFER& DEPTH BUFFER (1.0)
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clean up the colour of the window
-													   // and the depth buffer
-  glMatrixMode(GL_MODELVIEW); 
-  glLoadIdentity();
-	
- 
-  glTranslatef(0,0,-100);
-  glTranslatef(tx,0.0,0.0);
-  glRotatef(rotx,1,0,0);
+void Render() {    
+	//CLEARS FRAME BUFFER ie COLOR BUFFER& DEPTH BUFFER (1.0)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clean up the colour of the window and the depth buffer
+	glMatrixMode(GL_MODELVIEW); 
+	glLoadIdentity();
 
-  
- 
-  //(01)             
-  glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
-  DisplayModel(md);
+	glTranslatef(0,0,-100);
+	glTranslatef(tx,0.0,0.0);
+	glRotatef(rotx,1,0,0);
 
-  //(02)
-  //glColor3f(0.8, 0.1, 0.1);
-  //glTranslatef(-20.0,0.0,0.0);
-  //keimeno("Dokimastiko keimeno",0.05f);
+	//(01)             
+	glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
+	DisplayModel(md);
 
-  //(03)             
-  //glColor3f(red, green, blue);                            // Set drawing colour
-  //glutSolidTeapot(20.0);
-  
- 
-  glutSwapBuffers();             // All drawing commands applied to the 
-                                 // hidden buffer, so now, bring forward
-                                 // the hidden buffer and hide the visible one
+	//(02)
+	//glColor3f(0.8, 0.1, 0.1);
+	//glTranslatef(-20.0,0.0,0.0);
+	//keimeno("Dokimastiko keimeno",0.05f);
+
+	//(03)             
+	//glColor3f(red, green, blue);                            // Set drawing colour
+	//glutSolidTeapot(20.0);
+
+	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
 }
 
 //-----------------------------------------------------------
 
-void Resize(int w, int h)
-{ 
+void Resize(int w, int h) { 
   // define the visible area of the window ( in pixels )
   if (h==0) h=1;
   glViewport(0,0,w,h); 
 
   // Setup viewing volume
-
   glMatrixMode(GL_PROJECTION); 
   glLoadIdentity();
  
   gluPerspective(60.0, (float)w/(float)h, 1.0, 500.0);
 }
 
-void Idle()
-{
-	if(animate)
-		rotx+=0.4;
-
-	glutPostRedisplay();
-}
-
-void Keyboard(unsigned char key,int x,int y)
-{
-	switch(key)
-	{
-	case 'q' : exit(0);
-		break;
-	case 'a' : tx-=0.5f;
-		break;
-	case 'd' : tx+=0.5f;
-		break;
-	default : break;
+void Idle() {
+	if (animate) {
+		rotx += 0.4;
 	}
-
 	glutPostRedisplay();
-
 }
 
-void Mouse(int button,int state,int x,int y)
-{
-	 if(state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
-	 {
-		 animate = !animate;
-         glutPostRedisplay();
-	 }
+void Keyboard(unsigned char key, int x, int y) {
+	switch(key) {
+		case 'q' :
+			exit(0);
+			break;
+		case 'a' :
+			tx-=0.5f;
+			break;
+		case 'd' :
+			tx+=0.5f;
+			break;
+		default :
+			break;
+	}
+	glutPostRedisplay();
+}
+
+void Mouse(int button, int state, int x, int y) {
+	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON) {
+		animate = !animate;
+		glutPostRedisplay();
+	}
 }
 
 
-void Setup()  // TOUCH IT !! 
-{ 
+void Setup() { 
 	ReadFile(&md);
 
 	//Parameter handling
@@ -136,11 +120,9 @@ void Setup()  // TOUCH IT !!
 	GLfloat ambientLight[] = { 0.3, 0.3, 0.3, 1.0 };
 	GLfloat diffuseLight[] = { 0.8, 0.8, 0.8, 1.0 };
 	// GLfloat specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-
 	   
 	glLightfv( GL_LIGHT0, GL_AMBIENT, ambientLight );
 	glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuseLight );
-	
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -152,74 +134,74 @@ void Setup()  // TOUCH IT !!
 
 	//01
 	glFrontFace(GL_CCW);
- 
 
 	// Black background
 	glClearColor(0.0f,0.0f,0.0f,1.0f);
-
 }
 
-void MenuSelect(int choice)
-{
+void MenuSelect(int choice) {
 	switch (choice) {
-		case RED : 
+		case RED: 
 			red = 1.0; 
 			green = 0.0; 
-			blue = 0.0; break;
-		case GREEN : 
+			blue = 0.0;
+			break;
+		case GREEN: 
 			red = 0.0; 
 			green = 1.0; 
-			blue = 0.0; break;
-		case BLUE : 
+			blue = 0.0;
+			break;
+		case BLUE: 
 			red = 0.0; 
 			green = 0.0; 
-			blue = 1.0; break;
-		case WHITE : 
+			blue = 1.0;
+			break;
+		case WHITE: 
 			red = 1.0; 
 			green = 1.0; 
-			blue = 1.0; break;
+			blue = 1.0;
+			break;
+		default:
+			break;
 	}
-
 }
 
-void ReadFile(model *md)
-{
+void ReadFile(model *md) {
+	// ifstream obj_file("OBJINFO.TXT");                   // Open the file for reading OBJINFO.TXT
+	ifstream obj_file("../planet.obj");                   // Open the file for reading OBJINFO.TXT
 
-	ifstream obj_file("OBJINFO.TXT");                   // Open the file for reading OBJINFO.TXT
-   
-	if (obj_file.fail()) 
-		exit(1);
+	if (obj_file.fail()) {
+		exit(EXIT_FAILURE);
+	}
 
 	obj_file >> md->vertices;                               // Get the number of vertices
 	obj_file >> md->faces;									// Get the number of faces
 
+	cout << "adjsahdjash "<< md->vertices << endl;
 	for (int i = 0; i < md->vertices; i++){                        // Get the vertex coordinates
-	   
+
 		obj_file >> md->obj_points[i].x;
 		obj_file >> md->obj_points[i].y;
 		obj_file >> md->obj_points[i].z;
-	
-   }
 
-   for (int i = 0; i < md->faces; i++){                        // Get the face structure
-	   
+	}
+
+	for (int i = 0; i < md->faces; i++){                        // Get the face structure
+
 		obj_file >> md->obj_faces[i].vtx[0];
 		obj_file >> md->obj_faces[i].vtx[1];
 		obj_file >> md->obj_faces[i].vtx[2];
-	
-   }
 
-   obj_file.close();
+	}
+
+	obj_file.close();
 }
 
-void DisplayModel(model md)
-{
-
+void DisplayModel(model md) {
 	glPushMatrix();
 	glBegin(GL_TRIANGLES);
 
-	for (int i = 0; i < md.faces; i++)
-	{
+	for (int i = 0; i < md.faces; i++) {
 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x,md.obj_points[md.obj_faces[i].vtx[0]-1].y,md.obj_points[md.obj_faces[i].vtx[0]-1].z);
 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x,md.obj_points[md.obj_faces[i].vtx[1]-1].y,md.obj_points[md.obj_faces[i].vtx[1]-1].z);
 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x,md.obj_points[md.obj_faces[i].vtx[2]-1].y,md.obj_points[md.obj_faces[i].vtx[2]-1].z);
