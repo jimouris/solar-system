@@ -23,6 +23,9 @@ public:
 	Point(float, float, float);
 	~Point();
 	
+	float getX();
+	float getY();
+	float getZ();
 	void print(void);
 
 };
@@ -33,7 +36,8 @@ class Faces {
 public:
 	Faces(float, float, float, float, float, float);
 	~Faces();
-
+	
+	Point* getV();
 	void print(void);
 };
 
@@ -52,7 +56,7 @@ typedef struct face {
 } face;
 
 typedef struct model {
-	// Point obj_points[10];
+	Point obj_points[10];
 	face obj_faces[4];
 	int vertices;
 	int faces;
@@ -77,7 +81,7 @@ void Idle();
 void ReadFile(myModel *, char *);
 //Function for reading a model file
 
-void DisplayModel(model);
+void DisplayModel(myModel);
 // Function for displaying a model
 
 void Keyboard(unsigned char key,int x,int y);

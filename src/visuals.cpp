@@ -25,6 +25,17 @@ Point::Point(float x, float y, float z) {
 	this->y = y;
 	this->z = z;
 }
+float Point::getX() {
+	return this->x;
+}
+
+float Point::getY() {
+	return this->y;
+}
+
+float Point::getZ() {
+	return this->z;
+}
 
 void Point::print(void) {
 	cout << this->x << " " << this->y << " " << this->z << endl;
@@ -33,6 +44,10 @@ void Point::print(void) {
 Faces::Faces(float v1, float vn1, float v2, float vn2, float v3, float vn3) {
 	this->v = new Point(v1, v2, v3);
 	this->vn = new Point(vn1, vn2, vn3);
+}
+
+Point* Faces::getV() {
+	return this->v;
 }
 
 void Faces::print(void) {
@@ -62,7 +77,7 @@ void Render() {
 
 	//(01)             
 	glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
-	// DisplayModel(md);
+	DisplayModel(md);
 
 	//(02)
 	//glColor3f(0.8, 0.1, 0.1);
@@ -190,49 +205,6 @@ void MenuSelect(int choice) {
 	}
 }
 
-/*
-bool loadOBJ(const char * path, std::vector < glm::vec3 > & out_vertices, std::vector < glm::vec2 > & out_uvs, std::vector < glm::vec3 > & out_normals) {
-	while(1) {
-		char lineHeader[128];
-		// read the first word of the line
-		int res = fscanf(file, "%s", lineHeader);
-		if (res == EOF)
-			break; // EOF = End Of File. Quit the loop.
-
-		if ( strcmp(lineHeader, "v") == 0 ){
-			glm::vec3 vertex;
-			fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
-			temp_vertices.push_back(vertex);
-		} else if ( strcmp( lineHeader, "vt" ) == 0 ){
-			glm::vec2 uv;
-			fscanf(file, "%f %f\n", &uv.x, &uv.y );
-			temp_uvs.push_back(uv);
-		}else if ( strcmp( lineHeader, "vn" ) == 0 ){
-			glm::vec3 normal;
-			fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
-			temp_normals.push_back(normal);
-		}else if ( strcmp( lineHeader, "f" ) == 0 ){
-			std::string vertex1, vertex2, vertex3;
-			unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-			int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
-			if (matches != 9){
-				printf("File can't be read by our simple parser : ( Try exporting with other options\n");
-				return false;
-			}
-			vertexIndices.push_back(vertexIndex[0]);
-			vertexIndices.push_back(vertexIndex[1]);
-			vertexIndices.push_back(vertexIndex[2]);
-			uvIndices    .push_back(uvIndex[0]);
-			uvIndices    .push_back(uvIndex[1]);
-			uvIndices    .push_back(uvIndex[2]);
-			normalIndices.push_back(normalIndex[0]);
-			normalIndices.push_back(normalIndex[1]);
-			normalIndices.push_back(normalIndex[2]);
-		}
-	}
-}
-*/
-
 void ReadFile(myModel *md, char *path) {
 	string line;
 	float x, y, z;
@@ -246,16 +218,13 @@ void ReadFile(myModel *md, char *path) {
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
 				md->v.push_back(new Point(x, y, z));
-
-				// Point *ppap = md->v.back();
-				// ppap->print();
-				// exit(1);
 			} else if (line.find("vn ") == 0) {
 				string temp = line.substr(3);
 				x = stod(temp, &sz);
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
-				md->vn.push_back(new Point(x, y, z));
+				md->v.push_back(new Point(x, y, z));
+				// md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
 				int v1, vn1, v2, vn2, v3, vn3;
 				string::size_type sz, sz2, sz3, sz4, sz5;
@@ -267,47 +236,24 @@ void ReadFile(myModel *md, char *path) {
 				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
 				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
 				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
-				
-				// Faces *ppap = md->f.back();
-				// ppap->print();
-				// exit(1);
 			}
 		}
 		myfile.close();
 	}
-
-	/*
-	ifstream obj_file("OBJINFO.TXT");                   // Open the file for reading OBJINFO.TXT
-	if (obj_file.fail()) {
-		exit(EXIT_FAILURE);
-	}
-	cout << "adjsahdjash "<< md->vertices << endl;
-	obj_file >> md->vertices;                               // Get the number of vertices
-	obj_file >> md->faces;									// Get the number of faces
-	for (int i = 0; i < md->vertices; i++){                        // Get the vertex coordinates
-		obj_file >> md->obj_points[i].x;
-		obj_file >> md->obj_points[i].y;
-		obj_file >> md->obj_points[i].z;
-	}
-	for (int i = 0; i < md->faces; i++){                        // Get the face structure
-
-		obj_file >> md->obj_faces[i].vtx[0];
-		obj_file >> md->obj_faces[i].vtx[1];
-		obj_file >> md->obj_faces[i].vtx[2];
-
-	}
-	obj_file.close();
-	*/
+	cout << "Done reading from " << path << endl;
 }
 
-void DisplayModel(model md) {
+void DisplayModel(myModel md) {
 	glPushMatrix();
 	glBegin(GL_TRIANGLES);
 
-	for (int i = 0; i < md.faces; i++) {
-		// glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x,md.obj_points[md.obj_faces[i].vtx[0]-1].y,md.obj_points[md.obj_faces[i].vtx[0]-1].z);
-		// glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x,md.obj_points[md.obj_faces[i].vtx[1]-1].y,md.obj_points[md.obj_faces[i].vtx[1]-1].z);
-		// glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x,md.obj_points[md.obj_faces[i].vtx[2]-1].y,md.obj_points[md.obj_faces[i].vtx[2]-1].z);
+	for (size_t i = 0; i < md.f.size(); i++) {
+// glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x,md.obj_points[md.obj_faces[i].vtx[0]-1].y,md.obj_points[md.obj_faces[i].vtx[0]-1].z);
+// glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x,md.obj_points[md.obj_faces[i].vtx[1]-1].y,md.obj_points[md.obj_faces[i].vtx[1]-1].z);
+// glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x,md.obj_points[md.obj_faces[i].vtx[2]-1].y,md.obj_points[md.obj_faces[i].vtx[2]-1].z);
+		glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
+		glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
+		glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
 	}
 
 	glEnd();
