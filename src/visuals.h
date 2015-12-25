@@ -22,6 +22,9 @@ class Point {
 public:
 	Point(float, float, float);
 	~Point();
+	
+	void print(void);
+
 };
 
 class Faces {
@@ -34,12 +37,12 @@ public:
 };
 
 class myModel {
-	vector <Point> v;
-	vector <Point> vn;
-	vector <Faces> f;
 public:
-	myModel();
-	~myModel();
+	vector <Point *> v;
+	vector <Point *> vn;
+	vector <Faces *> f;
+	myModel() {}
+	~myModel() {}
 
 };
 
@@ -70,7 +73,7 @@ void Setup();
 
 void Idle();
 
-void ReadFile(model *, char *);
+void ReadFile(myModel *, char *);
 //Function for reading a model file
 
 void DisplayModel(model);

@@ -1,11 +1,8 @@
-#include <stdio.h>     // - Just for some ASCII messages
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <string.h>
 #include <iostream>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
 #include <fstream>
 #include <vector>
 #include <string>
@@ -13,7 +10,7 @@
 #include "GL/glut.h"   // - An interface and windows management library
 #include "visuals.h"   // Header file for our OpenGL functions
 
-model md;
+myModel md;
 static float tx = 0.0;
 static float rotx = 0.0;
 static bool animate = false;
@@ -27,6 +24,10 @@ Point::Point(float x, float y, float z) {
 	this->x = x;
 	this->y = y;
 	this->z = z;
+}
+
+void Point::print(void) {
+	cout << this->x << " " << this->y << " " << this->z << endl;
 }
 
 Faces::Faces(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) {
@@ -57,7 +58,7 @@ void Render() {
 
 	//(01)             
 	glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
-	DisplayModel(md);
+	// DisplayModel(md);
 
 	//(02)
 	//glColor3f(0.8, 0.1, 0.1);
@@ -228,39 +229,40 @@ bool loadOBJ(const char * path, std::vector < glm::vec3 > & out_vertices, std::v
 }
 */
 
-void ReadFile(model *md, char *path) {
+void ReadFile(myModel *md, char *path) {
 
 	string line;
+	float x, y, z;
+	string::size_type sz, sz2;
 	ifstream myfile(path);
 	if (myfile) {
 		while (getline(myfile, line))	{
 			if (line.find("v ") == 0) {
-				// istringstream iss(line);
-			 //    vector<string> tokens;
-			 //    copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(tokens));
+				string temp = line.substr(3);
+				x = stod(temp, &sz);
+				y = stod(temp.substr(sz), &sz2);
+				z = stod(temp.substr(sz+sz2));
 
-				float x,y,z;
-				string::size_type sz,sz2;
+				md->v.push_back(new Point(x, y, z));
 
-
-				string temp=line.substr(3);
-				x=stod(temp,&sz);
-				y=stod(temp.substr(sz),&sz2);
-				z=stod(temp.substr(sz+sz2));
-				//cout << temp << endl;
-				cout << x << endl;
-				cout << y << endl;
-				cout << z << endl;
-
-				//cout << line;
+				Point *ppap = md->v.back();
+				ppap->print();
 				exit(1);
 			} else if (line.find("vn ") == 0) {
-			    // std::cout << "String starts with vn\n";
+				string temp = line.substr(3);
+				x = stod(temp, &sz);
+				y = stod(temp.substr(sz), &sz2);
+				z = stod(temp.substr(sz+sz2));
 
-
+				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
-			    // std::cout << "String starts with f\n";
+				// string temp = line.substr(3);
+				// x = stod(temp, &sz);
+				// y = stod(temp.substr(sz), &sz2);
+				// z = stod(temp.substr(sz+sz2));
+				// x2 ....
 
+				// Faces *fp = new Faces(x1, y1, z1, x2, y2 z2, x3, y3, z3);
 			}
 		}
 		myfile.close();
