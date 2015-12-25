@@ -30,16 +30,14 @@ void Point::print(void) {
 	cout << this->x << " " << this->y << " " << this->z << endl;
 }
 
-Faces::Faces(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) {
-	this->p1 = new Point(x1, y1, z1);
-	this->p2 = new Point(x2, y2, z2);
-	this->p3 = new Point(x3, y3, z3);
+Faces::Faces(float v1, float vn1, float v2, float vn2, float v3, float vn3) {
+	this->v = new Point(v1, v2, v3);
+	this->vn = new Point(vn1, vn2, vn3);
 }
 
 void Faces::print(void) {
-	this->p1->print();
-	this->p2->print();
-	this->p3->print();
+	this->v->print();
+	this->vn->print();
 }
 
 void keimeno(const char *str, float size) {
@@ -297,20 +295,8 @@ void ReadFile(myModel *md, char *path) {
 				cout << z2 << endl;
 				cout << x3 << endl;
 				cout << z3 << endl;
-				exit(1);
+				// exit(1);
 				
-
-				// string::size_type sz3, sz4, sz5, sz6, sz7, sz8;
-				// string temp = line.substr(9);
-				// float x1 = stod(temp, &sz);
-				// float y1 = stod(temp.substr(sz), &sz2);
-				// float z1 = stod(temp.substr(sz+sz2), &sz3);
-				// float x2 = stod(temp.substr(sz+sz2+sz3), &sz4);
-				// float y2 = stod(temp.substr(sz+sz2+sz3+sz4), &sz5);
-				// float z2 = stod(temp.substr(sz+sz2+sz3+sz4+sz5), &sz6);
-				// float x3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6), &sz7);
-				// float y3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6+sz7), &sz8);
-				// float z3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6+sz7+sz8));
 				// md->f.push_back(new Faces(x1, y1, z1, x2, y2, z2, x3, y3, z3));
 				
 				// Faces *ppap = md->f.back();

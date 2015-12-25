@@ -28,11 +28,10 @@ public:
 };
 
 class Faces {
-	Point *p1;
-	Point *p2;
-	Point *p3;
+	Point *v;
+	Point *vn;
 public:
-	Faces(float, float, float, float, float, float, float, float, float);
+	Faces(float, float, float, float, float, float);
 	~Faces();
 
 	void print(void);
