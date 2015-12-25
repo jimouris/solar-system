@@ -226,16 +226,50 @@ void ReadFile(myModel *md, char *path) {
 				md->v.push_back(new Point(x, y, z));
 				// md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
-				int v1, vn1, v2, vn2, v3, vn3;
-				string::size_type sz, sz2, sz3, sz4, sz5;
- 				string temp = line.substr(3);
-				v1 = stoi(temp, &sz);
-				vn1 = stoi(temp.substr(sz+2), &sz2);
-				v2 = stoi(temp.substr(sz+2+sz2), &sz3);
-				vn2 = stoi(temp.substr(sz+2+sz2+sz3+2), &sz4);
-				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
-				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
-				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
+				int x1=0,z1=0,x2=0,z2=0,x3=0,z3=0;
+				string::size_type sz,sz2=0;
+				size_t pos;
+				string str;
+
+				cout << line << endl;
+				string temp=line.substr(3);
+				for(int i=1; i<=6; i++){
+					switch(i){
+						case 1:
+							x1=stoi(temp,&sz);
+							break;
+						case 2:
+							z1=stoi(temp.substr(sz+2),&sz2);
+							break;
+						case 3:
+							pos=temp.substr(sz+sz2).find(" ");
+							str=temp.substr(sz+sz2);
+							x2=stoi(str.substr(pos),&sz2);
+							break;
+						case 4:
+							pos=temp.substr(sz+sz2).find("//");
+							str=temp.substr(sz+sz2);
+							z2=stoi(str.substr(pos+2),&sz2);
+							str=str.substr(pos);
+							break;
+						case 5:
+							pos=str.find(" ");
+							x3=stoi(str.substr(pos),&sz2);
+							str=str.substr(pos);
+							break;
+						case 6:
+							pos=str.find("//");
+							z3=stoi(str.substr(pos+2),&sz2);
+							break;
+					}
+				}
+				cout << x1 << endl;
+				cout << z1 << endl;
+				cout << x2 << endl;
+				cout << z2 << endl;
+				cout << x3 << endl;
+				cout << z3 << endl;
+				exit(1);
 			}
 		}
 		myfile.close();
