@@ -36,6 +36,12 @@ Faces::Faces(float x1, float y1, float z1, float x2, float y2, float z2, float x
 	this->p3 = new Point(x3, y3, z3);
 }
 
+void Faces::print(void) {
+	this->p1->print();
+	this->p2->print();
+	this->p3->print();
+}
+
 void keimeno(const char *str, float size) {
 	glPushMatrix();
 	glScalef(size,size,size);
@@ -242,27 +248,35 @@ void ReadFile(myModel *md, char *path) {
 				x = stod(temp, &sz);
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
-
 				md->v.push_back(new Point(x, y, z));
 
-				Point *ppap = md->v.back();
-				ppap->print();
-				exit(1);
+				// Point *ppap = md->v.back();
+				// ppap->print();
+				// exit(1);
 			} else if (line.find("vn ") == 0) {
 				string temp = line.substr(3);
 				x = stod(temp, &sz);
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
-
 				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
-				// string temp = line.substr(3);
-				// x = stod(temp, &sz);
-				// y = stod(temp.substr(sz), &sz2);
-				// z = stod(temp.substr(sz+sz2));
-				// x2 ....
-
-				// Faces *fp = new Faces(x1, y1, z1, x2, y2 z2, x3, y3, z3);
+				// string temp = line.substr(9);
+				// float x1 = stod(temp, &sz);
+				// float y1 = stod(temp.substr(sz), &sz2);
+				// float z1 = stod(temp.substr(sz+sz2));
+				// sz = sz + sz2;
+				// float x2 = stod(temp, &sz);
+				// float y2 = stod(temp.substr(sz), &sz2);
+				// float z2 = stod(temp.substr(sz+sz2));
+				// sz = sz + sz2;
+				// float x3 = stod(temp, &sz);
+				// float y3 = stod(temp.substr(sz), &sz2);
+				// float z3 = stod(temp.substr(sz+sz2));
+				// md->f.push_back(new Faces(x1, y1, z1, x2, y2, z2, x3, y3, z3));
+				
+				// Faces *ppap = md->f.back();
+				// ppap->print();
+				// exit(1);
 			}
 		}
 		myfile.close();

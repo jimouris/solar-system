@@ -34,6 +34,8 @@ class Faces {
 public:
 	Faces(float, float, float, float, float, float, float, float, float);
 	~Faces();
+
+	void print(void);
 };
 
 class myModel {
