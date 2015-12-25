@@ -263,6 +263,41 @@ void ReadFile(myModel *md, char *path) {
 				/* f  24//24 23//23 3//3 */
 				/* auth  einai h grammh pou prepei na parsaroume se auth th periptwsh. 6 integers apo8hkeuontai */
 				/*	x1//z1 x2//z2 x3//z3 */
+				int x1=0,z1=0,x2=0,z2=0,x3=0,z3=0;
+				string::size_type sz,sz2=0;
+
+				cout << "line " << line << endl;
+ 				string temp=line.substr(3);
+				for(int i=1; i<=6; i++){
+					switch(i){
+						case 1:
+							x1=stoi(temp,&sz);
+							break;
+						case 2:
+							z1=stoi(temp.substr(sz+2),&sz2);
+							break;
+						case 3:
+							
+							x2=stoi(temp.substr(sz+3),&sz2);
+							break;
+						case 4:
+							z2=stoi(temp.substr(sz+7),&sz2);
+							break;
+						case 5:
+							x3=stoi(temp.substr(sz+9),&sz2);
+							break;
+						case 6:
+							z3=stoi(temp.substr(sz+12),&sz2);
+							break;
+					}
+				}
+				cout << x1 << endl;
+				cout << z1 << endl;
+				cout << x2 << endl;
+				cout << z2 << endl;
+				cout << x3 << endl;
+				cout << z3 << endl;
+				exit(1);
 				
 
 				// string::size_type sz3, sz4, sz5, sz6, sz7, sz8;
