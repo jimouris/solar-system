@@ -260,18 +260,22 @@ void ReadFile(myModel *md, char *path) {
 				z = stod(temp.substr(sz+sz2));
 				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
+				/* f  24//24 23//23 3//3 */
+				/* auth  einai h grammh pou prepei na parsaroume se auth th periptwsh. 6 integers apo8hkeuontai */
+				/*	x1//z1 x2//z2 x3//z3 */
+				
+
+				// string::size_type sz3, sz4, sz5, sz6, sz7, sz8;
 				// string temp = line.substr(9);
 				// float x1 = stod(temp, &sz);
 				// float y1 = stod(temp.substr(sz), &sz2);
-				// float z1 = stod(temp.substr(sz+sz2));
-				// sz = sz + sz2;
-				// float x2 = stod(temp, &sz);
-				// float y2 = stod(temp.substr(sz), &sz2);
-				// float z2 = stod(temp.substr(sz+sz2));
-				// sz = sz + sz2;
-				// float x3 = stod(temp, &sz);
-				// float y3 = stod(temp.substr(sz), &sz2);
-				// float z3 = stod(temp.substr(sz+sz2));
+				// float z1 = stod(temp.substr(sz+sz2), &sz3);
+				// float x2 = stod(temp.substr(sz+sz2+sz3), &sz4);
+				// float y2 = stod(temp.substr(sz+sz2+sz3+sz4), &sz5);
+				// float z2 = stod(temp.substr(sz+sz2+sz3+sz4+sz5), &sz6);
+				// float x3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6), &sz7);
+				// float y3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6+sz7), &sz8);
+				// float z3 = stod(temp.substr(sz+sz2+sz3+sz4+sz5+sz6+sz7+sz8));
 				// md->f.push_back(new Faces(x1, y1, z1, x2, y2, z2, x3, y3, z3));
 				
 				// Faces *ppap = md->f.back();
