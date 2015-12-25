@@ -234,7 +234,6 @@ bool loadOBJ(const char * path, std::vector < glm::vec3 > & out_vertices, std::v
 */
 
 void ReadFile(myModel *md, char *path) {
-
 	string line;
 	float x, y, z;
 	string::size_type sz, sz2;
@@ -258,45 +257,16 @@ void ReadFile(myModel *md, char *path) {
 				z = stod(temp.substr(sz+sz2));
 				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
-				/* f  24//24 23//23 3//3 */
-				/* auth  einai h grammh pou prepei na parsaroume se auth th periptwsh. 6 integers apo8hkeuontai */
-				/*	v1//vn1 v2//vn2 x3//z3 */
-				int v1=0,vn1=0,v2=0,vn2=0,v3=0,vn3=0;
-				string::size_type sz,sz2=0;
-
-				cout << "line " << line << endl;
- 				string temp=line.substr(3);
-				for(int i=1; i<=6; i++){
-					switch(i){
-						case 1:
-							v1 = stoi(temp,&sz);
-							break;
-						case 2:
-							vn1 = stoi(temp.substr(sz+2),&sz2);
-							break;
-						case 3:
-							v2 = stoi(temp.substr(sz+3),&sz2);
-							break;
-						case 4:
-							vn2 = stoi(temp.substr(sz+7),&sz2);
-							break;
-						case 5:
-							v3 = stoi(temp.substr(sz+9),&sz2);
-							break;
-						case 6:
-							vn3 = stoi(temp.substr(sz+12),&sz2);
-							break;
-					}
-				}
-				cout << v1 << endl;
-				cout << vn1 << endl;
-				cout << v2 << endl;
-				cout << vn2 << endl;
-				cout << v3 << endl;
-				cout << vn3 << endl;
-				// exit(1);
-				
-				// md->f.push_back(new Faces(x1, y1, z1, x2, y2, z2, x3, y3, z3));
+				int v1, vn1, v2, vn2, v3, vn3;
+				string::size_type sz, sz2, sz3, sz4, sz5;
+ 				string temp = line.substr(3);
+				v1 = stoi(temp, &sz);
+				vn1 = stoi(temp.substr(sz+2), &sz2);
+				v2 = stoi(temp.substr(sz+2+sz2), &sz3);
+				vn2 = stoi(temp.substr(sz+2+sz2+sz3+2), &sz4);
+				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
+				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
+				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
 				
 				// Faces *ppap = md->f.back();
 				// ppap->print();
@@ -307,54 +277,18 @@ void ReadFile(myModel *md, char *path) {
 	}
 
 	/*
-	FILE *fp = fopen(path, "r");
-
-	if (fp == NULL) {
-		fprintf(stderr, "Error openining %s!\n", path);
+	ifstream obj_file("OBJINFO.TXT");                   // Open the file for reading OBJINFO.TXT
+	if (obj_file.fail()) {
 		exit(EXIT_FAILURE);
 	}
-	while (1) {
-		char lineHeader[128];
-		int res = fscanf(fp, "%s", lineHeader);
-		if (res == EOF) {
-			fprintf(stderr, "I found eof\n");
-			break;
-		}
-		if (!strcmp(lineHeader, "v")) {
-			// fprintf(stderr, "I found v\n");
-			float x=0, y=0, z=0;
-			fp >> x >> y >> z;
-
-			// Point *p = new Point(x, y, z);
-			
-		} else if (!strcmp(lineHeader, "vn" )) {
-			fprintf(stderr, "I found vn\n");
-
-		} else if (!strcmp(lineHeader, "f" )) {
-			fprintf(stderr, "I found f\n");
-
-		}
-	}
-	fclose(fp);
-*/
-
-	/*
-	// ifstream obj_file("OBJINFO.TXT");                   // Open the file for reading OBJINFO.TXT
-
-	// if (obj_file.fail()) {
-	// 	exit(EXIT_FAILURE);
-	// }
-	// cout << "adjsahdjash "<< md->vertices << endl;
+	cout << "adjsahdjash "<< md->vertices << endl;
 	obj_file >> md->vertices;                               // Get the number of vertices
 	obj_file >> md->faces;									// Get the number of faces
 	for (int i = 0; i < md->vertices; i++){                        // Get the vertex coordinates
-
 		obj_file >> md->obj_points[i].x;
 		obj_file >> md->obj_points[i].y;
 		obj_file >> md->obj_points[i].z;
-
 	}
-
 	for (int i = 0; i < md->faces; i++){                        // Get the face structure
 
 		obj_file >> md->obj_faces[i].vtx[0];
