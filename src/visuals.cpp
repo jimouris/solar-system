@@ -236,6 +236,7 @@ void ReadFile(myModel *md, char *path) {
 				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
 				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
 				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
+				md->f.push_back(new Faces(vn1, vn1, vn2, vn2, vn3, vn3));
 			}
 		}
 		myfile.close();
@@ -248,12 +249,9 @@ void DisplayModel(myModel md) {
 	glBegin(GL_TRIANGLES);
 
 	for (size_t i = 0; i < md.f.size(); i++) {
-// glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x,md.obj_points[md.obj_faces[i].vtx[0]-1].y,md.obj_points[md.obj_faces[i].vtx[0]-1].z);
-// glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x,md.obj_points[md.obj_faces[i].vtx[1]-1].y,md.obj_points[md.obj_faces[i].vtx[1]-1].z);
-// glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x,md.obj_points[md.obj_faces[i].vtx[2]-1].y,md.obj_points[md.obj_faces[i].vtx[2]-1].z);
-		glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
-		glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
-		glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
+glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
+glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
+glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
 	}
 
 	glEnd();
