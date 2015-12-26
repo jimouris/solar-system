@@ -227,7 +227,6 @@ void ReadFile(myModel *md, char *path) {
 				x = stod(temp, &sz);
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
-				// md->v.push_back(new Point(x, y, z));
 				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
 				int v1, vn1, v2, vn2, v3, vn3;
@@ -240,7 +239,6 @@ void ReadFile(myModel *md, char *path) {
 				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
 				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
 				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
-				// md->f.push_back(new Faces(vn1, vn1, vn2, vn2, vn3, vn3));
 			}
 		}
 		myfile.close();
