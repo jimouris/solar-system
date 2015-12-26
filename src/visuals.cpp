@@ -50,6 +50,10 @@ Point* Faces::getV() {
 	return this->v;
 }
 
+Point* Faces::getVn() {
+	return this->vn;
+}
+
 void Faces::print(void) {
 	this->v->print();
 	this->vn->print();
@@ -223,8 +227,8 @@ void ReadFile(myModel *md, char *path) {
 				x = stod(temp, &sz);
 				y = stod(temp.substr(sz), &sz2);
 				z = stod(temp.substr(sz+sz2));
-				md->v.push_back(new Point(x, y, z));
-				// md->vn.push_back(new Point(x, y, z));
+				// md->v.push_back(new Point(x, y, z));
+				md->vn.push_back(new Point(x, y, z));
 			} else if (line.find("f ") == 0) {
 				int v1, vn1, v2, vn2, v3, vn3;
 				string::size_type sz, sz2, sz3, sz4, sz5;
@@ -236,7 +240,7 @@ void ReadFile(myModel *md, char *path) {
 				v3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4), &sz5);
 				vn3 = stoi(temp.substr(sz+2+sz2+sz3+2+sz4+sz5+2));
 				md->f.push_back(new Faces(v1, vn1, v2, vn2, v3, vn3));
-				md->f.push_back(new Faces(vn1, vn1, vn2, vn2, vn3, vn3));
+				// md->f.push_back(new Faces(vn1, vn1, vn2, vn2, vn3, vn3));
 			}
 		}
 		myfile.close();
@@ -249,9 +253,15 @@ void DisplayModel(myModel md) {
 	glBegin(GL_TRIANGLES);
 
 	for (size_t i = 0; i < md.f.size(); i++) {
+
+glVertex3f(md.vn[md.f[i]->getVn()->getX()-1]->getX(), md.vn[md.f[i]->getVn()->getX()-1]->getY(), md.vn[md.f[i]->getVn()->getX()-1]->getZ());
+glVertex3f(md.vn[md.f[i]->getVn()->getY()-1]->getX(), md.vn[md.f[i]->getVn()->getY()-1]->getY(), md.vn[md.f[i]->getVn()->getY()-1]->getZ());
+glVertex3f(md.vn[md.f[i]->getVn()->getZ()-1]->getX(), md.vn[md.f[i]->getVn()->getZ()-1]->getY(), md.vn[md.f[i]->getVn()->getZ()-1]->getZ());
+	
 glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
 glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
 glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
+
 	}
 
 	glEnd();

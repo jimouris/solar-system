@@ -38,6 +38,7 @@ public:
 	~Faces();
 	
 	Point* getV();
+	Point* getVn();
 	void print(void);
 };
 
