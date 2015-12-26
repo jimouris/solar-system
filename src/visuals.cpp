@@ -75,16 +75,16 @@ void Render() {
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
-	glTranslatef(0,0,-100);
-	glTranslatef(tx,0.0,0.0);
-	glRotatef(rotx,1,0,0);
+	glTranslatef(0, 0, -100);
+	glTranslatef(tx, 0.0, 0.0);
+	glRotatef(rotx, 1, 0, 0);
 
 	//(01)             
-	glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
+	glColor3f(0.8, 0.1, 0.1);
 	DisplayModel(md);
 
 	//(02)
-	//glColor3f(0.8, 0.1, 0.1);
+	// glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
 	//glTranslatef(-20.0,0.0,0.0);
 	//keimeno("Dokimastiko keimeno",0.05f);
 
@@ -98,15 +98,17 @@ void Render() {
 //-----------------------------------------------------------
 
 void Resize(int w, int h) { 
-  // define the visible area of the window ( in pixels )
-  if (h==0) h=1;
-  glViewport(0,0,w,h); 
+	// define the visible area of the window ( in pixels )
+	if (h == 0) {
+		h = 1;
+	}
+	glViewport(0, 0, w, h); 
 
-  // Setup viewing volume
-  glMatrixMode(GL_PROJECTION); 
-  glLoadIdentity();
- 
-  gluPerspective(60.0, (float)w/(float)h, 1.0, 500.0);
+	// Setup viewing volume
+	glMatrixMode(GL_PROJECTION); 
+	glLoadIdentity();
+
+	gluPerspective(2.0, (float)w/(float)h, 1.0, 500.0);
 }
 
 void Idle() {
@@ -122,10 +124,10 @@ void Keyboard(unsigned char key, int x, int y) {
 			exit(0);
 			break;
 		case 'a' :
-			tx-=0.5f;
+			tx -= 0.5f;
 			break;
 		case 'd' :
-			tx+=0.5f;
+			tx += 0.5f;
 			break;
 		default :
 			break;
@@ -248,21 +250,19 @@ void ReadFile(myModel *md, char *path) {
 
 void DisplayModel(myModel md) {
 	glPushMatrix();
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_POINTS);
 
 	for (size_t i = 0; i < md.f.size(); i++) {
-
-glVertex3f(md.vn[md.f[i]->getVn()->getX()-1]->getX(), md.vn[md.f[i]->getVn()->getX()-1]->getY(), md.vn[md.f[i]->getVn()->getX()-1]->getZ());
-glVertex3f(md.vn[md.f[i]->getVn()->getY()-1]->getX(), md.vn[md.f[i]->getVn()->getY()-1]->getY(), md.vn[md.f[i]->getVn()->getY()-1]->getZ());
-glVertex3f(md.vn[md.f[i]->getVn()->getZ()-1]->getX(), md.vn[md.f[i]->getVn()->getZ()-1]->getY(), md.vn[md.f[i]->getVn()->getZ()-1]->getZ());
-	
-glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
-glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
-glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
-
+		/* Vns */
+		glVertex3f(md.vn[md.f[i]->getVn()->getX()-1]->getX(), md.vn[md.f[i]->getVn()->getX()-1]->getY(), md.vn[md.f[i]->getVn()->getX()-1]->getZ());
+		glVertex3f(md.vn[md.f[i]->getVn()->getY()-1]->getX(), md.vn[md.f[i]->getVn()->getY()-1]->getY(), md.vn[md.f[i]->getVn()->getY()-1]->getZ());
+		glVertex3f(md.vn[md.f[i]->getVn()->getZ()-1]->getX(), md.vn[md.f[i]->getVn()->getZ()-1]->getY(), md.vn[md.f[i]->getVn()->getZ()-1]->getZ());
+		/* Vs */
+		glVertex3f(md.v[md.f[i]->getV()->getX()-1]->getX(), md.v[md.f[i]->getV()->getX()-1]->getY(), md.v[md.f[i]->getV()->getX()-1]->getZ());
+		glVertex3f(md.v[md.f[i]->getV()->getY()-1]->getX(), md.v[md.f[i]->getV()->getY()-1]->getY(), md.v[md.f[i]->getV()->getY()-1]->getZ());
+		glVertex3f(md.v[md.f[i]->getV()->getZ()-1]->getX(), md.v[md.f[i]->getV()->getZ()-1]->getY(), md.v[md.f[i]->getV()->getZ()-1]->getZ());
 	}
 
 	glEnd();
 	glPopMatrix();
-
 }
