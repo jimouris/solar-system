@@ -77,20 +77,12 @@ void Render() {
 
 	glTranslatef(0, 0, -100);
 	glTranslatef(tx, 0.0, 0.0);
-	glRotatef(rotx, 1, 0, 0);
+	glRotatef(rotx, 0, 1, 0);
 
 	//(01)             
 	glColor3f(0.8, 0.1, 0.1);
 	DisplayModel(md);
 
-	//(02)
-	// glColor3f(0.3, 0.2, 0.9);                            // Set drawing colour
-	//glTranslatef(-20.0,0.0,0.0);
-	//keimeno("Dokimastiko keimeno",0.05f);
-
-	//(03)             
-	//glColor3f(red, green, blue);                            // Set drawing colour
-	//glutSolidTeapot(20.0);
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
 }
@@ -141,7 +133,6 @@ void Mouse(int button, int state, int x, int y) {
 		glutPostRedisplay();
 	}
 }
-
 
 void Setup() { 
 	char path[] = "../planet.obj";
@@ -245,7 +236,6 @@ void ReadFile(myModel *md, char *path) {
 		}
 		myfile.close();
 	}
-	cout << "Done reading from " << path << endl;
 }
 
 void DisplayModel(myModel md) {

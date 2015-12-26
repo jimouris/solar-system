@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
     glutMouseFunc(Mouse);
 
     glutCreateMenu(MenuSelect);
-    glutAddMenuEntry("Red",RED);
-    glutAddMenuEntry("Blue",BLUE);
-    glutAddMenuEntry("Green",GREEN);
-    glutAddMenuEntry("White",WHITE);
+    glutAddMenuEntry("Red", RED);
+    glutAddMenuEntry("Blue", BLUE);
+    glutAddMenuEntry("Green", GREEN);
+    glutAddMenuEntry("White", WHITE);
 
     /* attach the menu to the right button */
     glutAttachMenu(GLUT_RIGHT_BUTTON);
