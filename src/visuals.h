@@ -70,11 +70,11 @@ void Render();
 // The function responsible for drawing everything in the 
 // OpenGL context associated to a window. 
 
-void Resize(int w, int h);
+void Resize(int, int);
 // Handle the window size changes and define the world coordinate 
 // system and projection type
 
-void Setup();
+void Setup(char *);
 // Set up the OpenGL state machine and create a light source
 
 void Idle();
@@ -85,12 +85,12 @@ void ReadFile(myModel *, char *);
 void DisplayModel(myModel);
 // Function for displaying a model
 
-void Keyboard(unsigned char key,int x,int y);
+void Keyboard(unsigned char, int, int);
 // Function for handling keyboard events.
 
-void Mouse(int button,int state,int x,int y); 
+void Mouse(int, int, int, int); 
 // Function for handling mouse events
 
-void MenuSelect(int choice);
+void MenuSelect(int);
 
 #endif

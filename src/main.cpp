@@ -29,7 +29,12 @@ int main(int argc, char *argv[]) {
     glutCreateWindow("Course5");
 
     // Configure various properties of the OpenGL rendering context
-    Setup();
+    if (argc == 1) {
+        char path[] = "../planet.obj";
+        Setup(path);
+    } else {
+        Setup(argv[1]);
+    }
 
     // Callbacks for the GL and GLUT events:
 

@@ -137,8 +137,8 @@ void Mouse(int button, int state, int x, int y) {
 	}
 }
 
-void Setup() { 
-	char path[] = "../planet.obj";
+void Setup(char *path) { 
+	// char path[] = "../planet.obj";
 	ReadFile(&md, path);
 
 	//Parameter handling
@@ -238,6 +238,9 @@ void ReadFile(myModel *md, char *path) {
 			}
 		}
 		myfile.close();
+	} else {
+		cerr << "File " << path << " doesn't exist!" << endl;
+		exit(EXIT_FAILURE);
 	}
 }
 
