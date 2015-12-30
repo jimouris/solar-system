@@ -22,15 +22,15 @@ int main(int argc, char *argv[]) {
 
     // Define the main window size and initial position 
     // ( upper left corner, boundaries included )
-    glutInitWindowSize(480, 480);
+    glutInitWindowSize(1000, 1000);
     glutInitWindowPosition(50, 50);
 
     // Create and label the main window
-    glutCreateWindow("Course5");
+    glutCreateWindow("Solar System");
 
     // Configure various properties of the OpenGL rendering context
     if (argc == 1) {
-        char path[] = "../planet.obj";
+        char path[] = "./planet.obj";
         Setup(path);
     } else {
         Setup(argv[1]);

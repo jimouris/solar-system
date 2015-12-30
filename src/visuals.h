@@ -6,7 +6,6 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
-#include <vector>
 
 using namespace std;
 
@@ -14,54 +13,33 @@ using namespace std;
 #define GREEN 2
 #define BLUE 3
 #define WHITE 4
+#define POINTS 9122
+#define NORMALS 9124
+#define FACES 18240
+#define CAM_FAR 10000
 
 class Point {
+public:
 	float x; 
 	float y; 
 	float z;
-public:
-	Point(float, float, float);
-	~Point();
-	
-	float getX();
-	float getY();
-	float getZ();
-	void print(void);
-
 };
 
-class Faces {
-	Point *v;
-	Point *vn;
-public:
-	Faces(float, float, float, float, float, float);
-	~Faces();
-	
-	Point* getV();
-	Point* getVn();
-	void print(void);
-};
+typedef struct Face{
+	int vtx[3];
+} Face;
 
 class myModel {
 public:
-	vector <Point *> v;
-	vector <Point *> vn;
-	vector <Faces *> f;
-	myModel() {}
-	~myModel() {}
+	Point obj_points[POINTS]; /* all v */
+	Point obj_normals[FACES]; /* all f */
+  	Face obj_faces[NORMALS]; // array of all f
+  	Face obj_norm[FACES];
+	int vertices; // #v
+	int faces; // #f
 
+	Point position;
 };
-
-typedef struct face {
-	int vtx[3];
-} face;
-
-typedef struct model {
-	Point obj_points[10];
-	face obj_faces[4];
-	int vertices;
-	int faces;
-} model;
 
 
 //-------- Functions --------------------------------
@@ -79,7 +57,7 @@ void Setup(char *);
 
 void Idle();
 
-void ReadFile(myModel *, char *);
+void ReadFile(char *);
 //Function for reading a model file
 
 void DisplayModel(myModel);
@@ -90,7 +68,8 @@ void Keyboard(unsigned char, int, int);
 
 void Mouse(int, int, int, int); 
 // Function for handling mouse events
-
 void MenuSelect(int);
+
+void createSun(void);
 
 #endif
