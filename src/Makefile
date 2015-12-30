@@ -14,7 +14,7 @@ all: $(OBJS)
 main.o: main.cpp
 	$(CC) -c main.cpp $(FLAGS) $(LIBS) 
 
-visuals.o: visuals.cpp
+visuals.o: visuals.cpp visuals.h
 	$(CC) -c visuals.cpp $(FLAGS) $(LIBS) 
 
 # clean house

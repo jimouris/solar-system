@@ -11,14 +11,14 @@
 
 myModel md;
 static float tx = 0.0;
-static float rotx = 0.0;
+// static float rotx = 0.0;
 static bool animate = false;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
 
-static float shineSize = 400.0;
+static float shineSize = 440.0;
 
 Stars starSystem;
 enum Light_t {SUN, STAR};
@@ -51,7 +51,7 @@ void createStars() {
 	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
-		starSystem.starsShineSize[i] = rand()%4+ 2;
+		starSystem.starsShineSize[i] = 1;
 		starSystem.starsPosition[i].x = rand()%400-200; starSystem.starsPosition[i].y = rand()%400-200; starSystem.starsPosition[i].z = /*rand()%100*/ - 515;
 	}
 }
@@ -100,16 +100,16 @@ void Resize(int w, int h) {
 	glLoadIdentity();
 
 	glViewport( 0, 0, w, h);
-	gluPerspective(45, (float)w/(float)h, 1, CAM_FAR);
+	gluPerspective(60, (float)w/(float)h, 1, CAM_FAR);
 
     glMatrixMode(GL_MODELVIEW);
 }
 
 void shine(float &shine, bool &g, float upbound, float lowbound) {
 	if (g) {
-		shine += 0.1;
+		shine += 0.04;
 	} else {
-		shine -= 0.1;
+		shine -= 0.04;
 	}
 	if (shine > upbound){
 		g = false;
@@ -122,9 +122,9 @@ void Idle() {
 	if (animate) {
 		// rotx += 0.4;
 
-		shine(shineSize, grow, 420, 400);
+		shine(shineSize, grow, 460, 440);
 		for (int i = 0 ; i < STARS ; i++) {
-			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 8, 4);
+			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 6, 3);
 		}
 	}
 
