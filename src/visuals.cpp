@@ -18,7 +18,7 @@ static float green = 0.0;
 static float blue = 0.0;
 
 bool shine = true;
-static float SunSize = 55.0;
+static float SunSize = 460.0;
 
 using namespace std;
 
@@ -30,8 +30,8 @@ void createSun(void) {
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(1.0, 1.0, 0.0, 0.2);
-  		glutSolidSphere(SunSize, 40, 40);
+		glColor4f(1.0, 1.0, 0.0, 0.1);
+  		glutWireSphere(SunSize, 40, 40);
 		glDisable(GL_BLEND);
 
 	glPopMatrix();
@@ -86,9 +86,9 @@ void Idle() {
 	} else {
 		SunSize -= 0.1;
 	}
-	if (SunSize > 62){
+	if (SunSize > 500){
 		shine = false;
-	} else if (SunSize < 52){
+	} else if (SunSize < 450){
 		shine = true;
 	}
 
