@@ -12,16 +12,14 @@
 myModel md;
 static float tx = 0.0;
 // static float rotx = 0.0;
-static bool animate = false;
+static bool animate = true;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
-
 static float shineSize = 440.0;
 
 Stars starSystem;
-enum Light_t {SUN, STAR};
 
 using namespace std;
 
@@ -52,7 +50,10 @@ void createStars() {
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
 		starSystem.starsShineSize[i] = 1;
-		starSystem.starsPosition[i].x = rand()%400-200; starSystem.starsPosition[i].y = rand()%400-200; starSystem.starsPosition[i].z = /*rand()%100*/ - 515;
+		int x = rand()%500-250, y = rand()%500-250;
+		starSystem.starsPosition[i].x = x;
+		starSystem.starsPosition[i].y = y;
+		starSystem.starsPosition[i].z = - 600;
 	}
 }
 
@@ -74,14 +75,14 @@ void Render() {
 	createLightSource(50, shineSize, pos, col, SUN);
 
 	drawStars();
-	// glPushMatrix();
-	// 	glTranslatef(0, 0, -300);
-	// 	glTranslatef(tx, 0.0, 0.0);
-	// 	glRotatef(rotx, 1, 0, 0);
+	glPushMatrix();
+		glTranslatef(100, 100, -300);
+		glTranslatef(tx, 0.0, 0.0);
+		glRotatef(0, 1, 0, 0);
 
-	// 	glColor3f(0.75, 0.35, 0.05);
-	// 	DisplayModel(md);
-	// glPopMatrix();
+		glColor3f(0.75, 0.35, 0.05);
+		DisplayModel(md);
+	glPopMatrix();
 
 
 

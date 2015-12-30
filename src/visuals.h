@@ -17,8 +17,9 @@ using namespace std;
 #define NORMALS 9124
 #define FACES 18240
 #define CAM_FAR 10000
-#define STARS 10
+#define STARS 13
 
+enum Light_t {SUN, STAR};
 
 class Point {
 public:
