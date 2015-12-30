@@ -17,6 +17,8 @@ using namespace std;
 #define NORMALS 9124
 #define FACES 18240
 #define CAM_FAR 10000
+#define STARS 5
+
 
 class Point {
 public:
@@ -28,6 +30,14 @@ public:
 typedef struct Face{
 	int vtx[3];
 } Face;
+
+class Stars {
+public:
+	float starsShineSize[STARS];
+	Point starsPosition[STARS];
+	bool starsgrow[STARS];
+	Point colour;
+};
 
 class myModel {
 public:

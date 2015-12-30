@@ -4,7 +4,7 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <time.h>
 
 #include "GL/glut.h"   // - An interface and windows management library
 #include "visuals.h"   // Header file for our OpenGL functions
@@ -16,25 +16,50 @@ static bool animate = false;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
+static bool grow = true;
 
-bool shine = true;
-static float SunSize = 460.0;
+static float shineSize = 400.0;
+
+Stars starSystem;
+enum Light_t {SUN, STAR};
 
 using namespace std;
 
-void createSun(void) {
+void createLightSource(float planetSize, float shineInitSize, Point position, Point colour, Light_t l) {
 	glPushMatrix();
-		glTranslatef(0, 0, -515);
-		glColor3f(1.0, 0.8, 0.0);
-		glutSolidSphere(50.0, 40, 40);
-
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(1.0, 1.0, 0.0, 0.1);
-  		glutWireSphere(SunSize, 40, 40);
-		glDisable(GL_BLEND);
-
+		glTranslatef(position.x, position.y, position.z);
+		glColor3f(colour.x, colour.y, colour.z);
+		glutSolidSphere(planetSize, 40, 40);
+		if (l == SUN) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(colour.x, colour.y+0.2, colour.z, 0.1);
+	  		glutWireSphere(shineInitSize, 40, 40);
+			glDisable(GL_BLEND);
+		} else if (l == STAR) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(colour.x, colour.y+0.2, colour.z, 0.1);
+	  		glutSolidSphere(shineInitSize, 40, 40);
+			glDisable(GL_BLEND);
+		}
 	glPopMatrix();
+}
+
+void createStars() {
+	srand((unsigned) time(NULL));
+	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
+	for (int i = 0 ; i < STARS ; i++) {
+		starSystem.starsgrow[i] = true;
+		starSystem.starsShineSize[i] = rand()%5 + 5;
+		starSystem.starsPosition[i].x = rand()%400-200; starSystem.starsPosition[i].y = rand()%400-200; starSystem.starsPosition[i].z = /*rand()%100*/ - 515;
+	}
+}
+
+void drawStars() {
+	for (int i = 0 ; i < STARS ; i++) {
+		createLightSource(1, starSystem.starsShineSize[i], starSystem.starsPosition[i], starSystem.colour, STAR);	
+	}
 }
 
 void Render() {    
@@ -43,16 +68,20 @@ void Render() {
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
-	createSun();
+	Point pos, col;
+	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
+	col.x = 1.0; col.y = 0.8; col.z = 0.0;
+	createLightSource(50, shineSize, pos, col, SUN);
 
-	glPushMatrix();
-		glTranslatef(0, 0, -300);
-		glTranslatef(tx, 0.0, 0.0);
-		glRotatef(rotx, 1, 0, 0);
+	drawStars();
+	// glPushMatrix();
+	// 	glTranslatef(0, 0, -300);
+	// 	glTranslatef(tx, 0.0, 0.0);
+	// 	glRotatef(rotx, 1, 0, 0);
 
-		glColor3f(0.75, 0.35, 0.05);
-		DisplayModel(md);
-	glPopMatrix();
+	// 	glColor3f(0.75, 0.35, 0.05);
+	// 	DisplayModel(md);
+	// glPopMatrix();
 
 
 
@@ -76,20 +105,27 @@ void Resize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+void shine(float &shine, bool &g, float upbound, float lowbound) {
+	if (g) {
+		shine += 0.1;
+	} else {
+		shine -= 0.1;
+	}
+	if (shine > upbound){
+		g = false;
+	} else if (shine < lowbound){
+		g = true;
+	}
+}
+
 void Idle() {
 	if (animate) {
 		rotx += 0.4;
 	}
 
-	if (shine) {
-		SunSize += 0.1;
-	} else {
-		SunSize -= 0.1;
-	}
-	if (SunSize > 500){
-		shine = false;
-	} else if (SunSize < 450){
-		shine = true;
+	shine(shineSize, grow, 420, 400);
+	for (int i = 0 ; i < STARS ; i++) {
+		shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 11, 5);
 	}
 
 	glutPostRedisplay();
@@ -122,6 +158,7 @@ void Mouse(int button, int state, int x, int y) {
 
 void Setup(char *path) { 
 	ReadFile(path);
+	createStars();
 
 	//Parameter handling
 	glShadeModel(GL_SMOOTH);
