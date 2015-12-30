@@ -51,7 +51,7 @@ void createStars() {
 	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
-		starSystem.starsShineSize[i] = rand()%5 + 5;
+		starSystem.starsShineSize[i] = rand()%4+ 2;
 		starSystem.starsPosition[i].x = rand()%400-200; starSystem.starsPosition[i].y = rand()%400-200; starSystem.starsPosition[i].z = /*rand()%100*/ - 515;
 	}
 }
@@ -120,12 +120,12 @@ void shine(float &shine, bool &g, float upbound, float lowbound) {
 
 void Idle() {
 	if (animate) {
-		rotx += 0.4;
-	}
+		// rotx += 0.4;
 
-	shine(shineSize, grow, 420, 400);
-	for (int i = 0 ; i < STARS ; i++) {
-		shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 11, 5);
+		shine(shineSize, grow, 420, 400);
+		for (int i = 0 ; i < STARS ; i++) {
+			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 8, 4);
+		}
 	}
 
 	glutPostRedisplay();
