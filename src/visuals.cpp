@@ -16,8 +16,9 @@ static bool animate = false;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
-float lx = 0.0f, ly = 0.0f, lz=0.0f; // vector for camera dir & pos of airplane
-float x= 0.0f, y=0.0f, z= 400; // x,z position of camera
+
+bool shine = true;
+static float SunSize = 55.0;
 
 using namespace std;
 
@@ -26,6 +27,13 @@ void createSun(void) {
 		glTranslatef(0, 0, -515);
 		glColor3f(1.0, 0.8, 0.0);
 		glutSolidSphere(50.0, 40, 40);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glColor4f(1.0, 1.0, 0.0, 0.2);
+  		glutSolidSphere(SunSize, 40, 40);
+		glDisable(GL_BLEND);
+
 	glPopMatrix();
 }
 
@@ -72,21 +80,34 @@ void Idle() {
 	if (animate) {
 		rotx += 0.4;
 	}
+
+	if (shine) {
+		SunSize += 0.1;
+	} else {
+		SunSize -= 0.1;
+	}
+	if (SunSize > 62){
+		shine = false;
+	} else if (SunSize < 52){
+		shine = true;
+	}
+
 	glutPostRedisplay();
 }
 
 void Keyboard(unsigned char key, int x, int y) {
 	switch(key) {
-		case 'q' :
+		case 'q':
+		case 'Q':
 			exit(0);
 			break;
-		case 'a' :
+		case 'a':
 			tx -= 0.5f;
 			break;
-		case 'd' :
+		case 'd':
 			tx += 0.5f;
 			break;
-		default :
+		default:
 			break;
 	}
 	glutPostRedisplay();
