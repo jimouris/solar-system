@@ -17,7 +17,7 @@ using namespace std;
 #define NORMALS 9124
 #define FACES 18240
 #define CAM_FAR 10000
-#define STARS 13
+#define STARS 50
 
 enum Light_t {SUN, STAR};
 
@@ -40,6 +40,12 @@ public:
 	Point colour;
 };
 
+class Planets{
+public:
+	Point planetPos[4];
+	Point colour[4];
+
+};
 class myModel {
 public:
 	Point obj_points[POINTS]; /* all v */

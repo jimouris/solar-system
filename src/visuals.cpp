@@ -11,15 +11,18 @@
 
 myModel md;
 static float tx = 0.0;
-// static float rotx = 0.0;
 static bool animate = true;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
 static float shineSize = 440.0;
+static float rotz = -600;
+static float rotx = 0.0;
+static float angle = 0.0;
 
 Stars starSystem;
+Planets planetSystem;
 
 using namespace std;
 
@@ -28,6 +31,7 @@ void createLightSource(float planetSize, float shineInitSize, Point position, Po
 		glTranslatef(position.x, position.y, position.z);
 		glColor3f(colour.x, colour.y, colour.z);
 		glutSolidSphere(planetSize, 40, 40);
+		glTranslatef(position.x, position.y, position.z);
 		if (l == SUN) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -37,7 +41,7 @@ void createLightSource(float planetSize, float shineInitSize, Point position, Po
 		} else if (l == STAR) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glColor4f(colour.x, colour.y+0.2, colour.z, 0.1);
+			glColor4f(colour.x, colour.y+0.2, colour.z, 0.2);
 	  		glutSolidSphere(shineInitSize, 40, 40);
 			glDisable(GL_BLEND);
 		}
@@ -50,7 +54,7 @@ void createStars() {
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
 		starSystem.starsShineSize[i] = 1;
-		int x = rand()%500-250, y = rand()%500-250;
+		int x = rand()%1000-500, y = rand()%1000-500;
 		starSystem.starsPosition[i].x = x;
 		starSystem.starsPosition[i].y = y;
 		starSystem.starsPosition[i].z = - 600;
@@ -73,17 +77,40 @@ void Render() {
 	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
 	col.x = 1.0; col.y = 0.8; col.z = 0.0;
 	createLightSource(50, shineSize, pos, col, SUN);
-
 	drawStars();
+
+	// glPushMatrix();
+	// 	glTranslatef(0, 0, -500);
+	// 	glTranslatef(tx, 0.0, 0.0);
+	// 	glRotatef(0, 1, 0, 0);
+		
+	// 	glScalef(50, 50, 50);
+	// 	glColor3f(0.75, 0.35, 0.05);
+	// 	DisplayModel(md);
+	// glPopMatrix();
+
+
+	// for(int i=0; i<2; i++){
+	// 	planetSystem.planetPos[i].x = rand()%500 - 250;
+	// 	planetSystem.planetPos[i].y = rand()%500 - 250;
+	// 	planetSystem.planetPos[i].z = rand()%500 - 250;
+	// 	glTranslatef(0, 0, -500);
+	// 	//glScalef(1000,1000,1000);
+	// 	glColor3f(0.75, 0.35, 0.05);
+	// 	glutSolidSphere(planetSystem.planetPos[i].x, planetSystem.planetPos[i].y, planetSystem.planetPos[i].z);
+	// }
+
+	/* Rotate planet */
 	glPushMatrix();
-		glTranslatef(100, 100, -300);
-		glTranslatef(tx, 0.0, 0.0);
-		glRotatef(0, 1, 0, 0);
+		glTranslatef(0, 0, -500); 
+		glRotatef(angle, 0, 1, 0);
+		glTranslatef(0, 0, 80);
 
-		glColor3f(0.75, 0.35, 0.05);
-		DisplayModel(md);
+		glRotatef(rotx, 0, 1, 0);
+		
+		glColor3f(0.4, 0.5, 0.2);
+		glutWireSphere(15, 40, 40);
 	glPopMatrix();
-
 
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
@@ -101,7 +128,7 @@ void Resize(int w, int h) {
 	glLoadIdentity();
 
 	glViewport( 0, 0, w, h);
-	gluPerspective(60, (float)w/(float)h, 1, CAM_FAR);
+	gluPerspective(45, (float)w/(float)h, 1, CAM_FAR);
 
     glMatrixMode(GL_MODELVIEW);
 }
@@ -119,14 +146,19 @@ void shine(float &shine, bool &g, float upbound, float lowbound) {
 	}
 }
 
+void planetMovement(){
+	rotx += 10;
+	angle += 0.5;
+}
+
 void Idle() {
 	if (animate) {
-		// rotx += 0.4;
 
 		shine(shineSize, grow, 460, 440);
 		for (int i = 0 ; i < STARS ; i++) {
 			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 6, 3);
 		}
+		planetMovement();
 	}
 
 	glutPostRedisplay();
@@ -268,7 +300,6 @@ void ReadFile(char *path) {
 
 void DisplayModel(myModel md) {
 	glPushMatrix();
-
 	glBegin(GL_TRIANGLES);
 		for (int i = 0; i < md.faces; i++) {
 			glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
@@ -279,6 +310,17 @@ void DisplayModel(myModel md) {
 			glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
 		}
 	glEnd();
-
+/*
+	glBegin(GL_POINTS);
+		for (int i = 0; i < md.faces; i++) {
+			glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
+			glVertex3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
+			glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
+			glVertex3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
+			glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
+			glVertex3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
+		}
+	glEnd();
+*/
 	glPopMatrix();
 }
