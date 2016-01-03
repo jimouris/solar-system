@@ -108,7 +108,7 @@ void Render() {
 	glPushMatrix();
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle, 0, 1, 0);
-		glTranslatef(0, 0, 80);
+		glTranslatef(0, 0, 120);
 
 		glRotatef(rotx, 0, 1, 0);
 		
@@ -119,8 +119,6 @@ void Render() {
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
 }
-
-//-----------------------------------------------------------
 
 void Resize(int w, int h) { 
 	// define the visible area of the window ( in pixels )
