@@ -3,7 +3,6 @@
 #include <math.h>
 #include <string.h>
 #include <iostream>
-#include <fstream>
 #include <time.h>
 
 #include "GL/glut.h"   // - An interface and windows management library
@@ -83,15 +82,6 @@ void Render() {
 	createLightSource(50, shineSize, pos, col, SUN);
 	drawStars();
 
-	// glPushMatrix();
-
-	// 	glTranslatef(tx, 0.0, 0.0);
-	// 	glRotatef(0, 1, 0, 0);
-		
-	// 	glColor3f(0.75, 0.35, 0.05);
-	// 	DisplayModel(md);
-	// glPopMatrix();
-
 
 	// for(int i=0; i<2; i++){
 	// 	planetSystem.planetPos[i].x = rand()%500 - 250;
@@ -105,14 +95,19 @@ void Render() {
 
 	/* Rotate planet */
 	glPushMatrix();
+		Point p;
+		p.x = 100; p.y = 0; p.z = -500;
+		glColor3f(0.7, 0.3, 0.1);
+
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle, 0, 1, 0);
-		glTranslatef(0, 0, 110);
+		glTranslatef(0, 0, 400);
 
-		glRotatef(rotx, 0, 1, 0);
+		glTranslatef(p.x, p.y, p.z);
+		glScalef(0.04, 0.04, 0.04);
 		
-		glColor3f(0.4, 0.5, 0.2);
-		glutSolidSphere(15, 40, 40);
+		glRotatef(rotx, 0, 1, 0);
+		DisplayModel(md, p, 0.04);
 	glPopMatrix();
 
 
@@ -154,7 +149,6 @@ void planetMovement(){
 
 void Idle() {
 	if (animate) {
-		// tx+=1;
 		shine(shineSize, grow, 54, 51, 0.03);
 		for (int i = 0 ; i < STARS ; i++) {
 			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], starSystem.starsSize[i]+1.5, starSystem.starsSize[i], 0.2);
@@ -275,19 +269,19 @@ void ReadFile(char *path) {
 			fprintf(stderr, "error reading line header\n");
 			exit(EXIT_FAILURE);
 		}
-		if ( !strcmp(first, "v") ){
+		if (!strcmp(first, "v")) {
 			if (fscanf(file,"%f %f %f ", &md.obj_points[i].x, &md.obj_points[i].y, &md.obj_points[i].z) != 3) {
 				fprintf(stderr, "error reading objpoints\n");
 				exit(EXIT_FAILURE);
 			}
 			i++;
-		} else if ( !strcmp(first, "vn") ){
+		} else if (!strcmp(first, "vn")) {
 			if (fscanf(file,"%f %f %f ", &md.obj_normals[m].x, &md.obj_normals[m].y, &md.obj_normals[m].z) != 3) {
 				fprintf(stderr, "error reading objnormals\n");
 				exit(EXIT_FAILURE);
 			}
 			m++;
-		} else if ( !strcmp( first, "f")){
+		} else if (!strcmp( first, "f")) {
 			if (fscanf(file,"%d//%d %d//%d %d//%d ", &md.obj_faces[j].vtx[0], &md.obj_norm[j].vtx[0], &md.obj_faces[j].vtx[1], &md.obj_norm[j].vtx[1], &md.obj_faces[j].vtx[2], &md.obj_norm[j].vtx[2]) != 6) {
 				fprintf(stderr, "error reading faces\n");
 				exit(EXIT_FAILURE);
@@ -299,31 +293,21 @@ void ReadFile(char *path) {
 	fclose(file);
 }
 
-void DisplayModel(myModel md) {
+void DisplayModel(myModel md, Point position, float size) {
 	glPushMatrix();
-		glTranslatef(0, 0, -500);
-		glScalef(0.05, 0.05, 0.05);
+		// glTranslatef(position.x, position.y, position.z);
+		// glScalef(size, size, size);
 
-	glBegin(GL_TRIANGLES);
-		for (int i = 0; i < md.faces; i++) {
-			glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
-			glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
-			glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
-			glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
-			glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
-			glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
-		}
-	glEnd();
-	// glBegin(GL_TRIANGLES);
-	// 	for (int i = 0; i < md.faces; i++) {
-	// 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
-	// 		// glVertex3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
-	// 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
-	// 		// glVertex3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
-	// 		glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
-	// 		// glVertex3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
-	// 	}
-	// glEnd();
+		glBegin(GL_TRIANGLES);
+			for (int i = 0; i < md.faces; i++) {
+				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
+				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
+				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
+				glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
+				glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
+				glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
+			}
+		glEnd();
 
 	glPopMatrix();
 }

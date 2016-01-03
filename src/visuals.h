@@ -78,7 +78,7 @@ void Idle();
 void ReadFile(char *);
 //Function for reading a model file
 
-void DisplayModel(myModel);
+void DisplayModel(myModel, Point, float);
 // Function for displaying a model
 
 void Keyboard(unsigned char, int, int);
