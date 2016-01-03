@@ -34,6 +34,7 @@ typedef struct Face{
 
 class Stars {
 public:
+	float starsSize[STARS];
 	float starsShineSize[STARS];
 	Point starsPosition[STARS];
 	bool starsgrow[STARS];

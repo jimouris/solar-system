@@ -57,7 +57,8 @@ void createStars() {
 	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
-		starSystem.starsShineSize[i] = 1;
+		starSystem.starsSize[i] = rand()%2+0.5;
+		starSystem.starsShineSize[i] = starSystem.starsSize[i];
 		starSystem.starsPosition[i].x = rand()%800-400;
 		starSystem.starsPosition[i].y = rand()%800-400;
 		starSystem.starsPosition[i].z = -600;
@@ -66,7 +67,7 @@ void createStars() {
 
 void drawStars() {
 	for (int i = 0 ; i < STARS ; i++) {
-		createLightSource(1, starSystem.starsShineSize[i], starSystem.starsPosition[i], starSystem.colour, STAR);	
+		createLightSource(starSystem.starsSize[i], starSystem.starsShineSize[i], starSystem.starsPosition[i], starSystem.colour, STAR);	
 	}
 }
 
@@ -133,11 +134,11 @@ void Resize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
-void shine(float &shine, bool &g, float upbound, float lowbound) {
+void shine(float &shine, bool &g, float upbound, float lowbound, float dt) {
 	if (g) {
-		shine += 0.03;
+		shine += dt;
 	} else {
-		shine -= 0.03;
+		shine -= dt;
 	}
 	if (shine > upbound){
 		g = false;
@@ -154,9 +155,9 @@ void planetMovement(){
 void Idle() {
 	if (animate) {
 		// tx+=1;
-		shine(shineSize, grow, 54, 51);
+		shine(shineSize, grow, 54, 51, 0.03);
 		for (int i = 0 ; i < STARS ; i++) {
-			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 3.5, 1);
+			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], starSystem.starsSize[i]+1.5, starSystem.starsSize[i], 0.2);
 		}
 		planetMovement();
 	}
