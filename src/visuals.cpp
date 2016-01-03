@@ -16,7 +16,7 @@ static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
-static float shineSize = 440.0;
+static float shineSize = 50.0;
 static float rotz = -600;
 static float rotx = 0.0;
 static float angle = 0.0;
@@ -28,23 +28,28 @@ using namespace std;
 
 void createLightSource(float planetSize, float shineInitSize, Point position, Point colour, Light_t l) {
 	glPushMatrix();
+	glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glTranslatef(position.x, position.y, position.z);
-		glColor3f(colour.x, colour.y, colour.z);
+		glColor4f(colour.x, colour.y, colour.z, 0.8);
 		glutSolidSphere(planetSize, 40, 40);
-		glTranslatef(position.x, position.y, position.z);
 		if (l == SUN) {
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glColor4f(colour.x, colour.y+0.2, colour.z, 0.1);
-	  		glutWireSphere(shineInitSize, 40, 40);
-			glDisable(GL_BLEND);
+	  		glColor4f(colour.x, colour.y+0.2, colour.z, 0.4);
+	  		glutSolidSphere(shineInitSize, 40, 40);
+
+	  		glColor4f(colour.x, colour.y+0.2, colour.z, 0.3);
+	  		glutSolidSphere(shineInitSize+2, 40, 40);
+
+			glColor4f(colour.x, colour.y+0.2, colour.z, 0.25);
+	  		glutSolidSphere(shineInitSize+4, 40, 40);
+		
+			glColor4f(colour.x, colour.y+0.2, colour.z, 0.3);
+	  		glutSolidSphere(shineInitSize+6, 40, 40);
 		} else if (l == STAR) {
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glColor4f(colour.x, colour.y+0.2, colour.z, 0.2);
 	  		glutSolidSphere(shineInitSize, 40, 40);
-			glDisable(GL_BLEND);
 		}
+	glDisable(GL_BLEND);
 	glPopMatrix();
 }
 
@@ -54,9 +59,8 @@ void createStars() {
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
 		starSystem.starsShineSize[i] = 1;
-		int x = rand()%1000-500, y = rand()%1000-500;
-		starSystem.starsPosition[i].x = x;
-		starSystem.starsPosition[i].y = y;
+		starSystem.starsPosition[i].x = rand()%800-400;
+		starSystem.starsPosition[i].y = rand()%800-400;
 		starSystem.starsPosition[i].z = - 600;
 	}
 }
@@ -135,9 +139,9 @@ void Resize(int w, int h) {
 
 void shine(float &shine, bool &g, float upbound, float lowbound) {
 	if (g) {
-		shine += 0.04;
+		shine += 0.03;
 	} else {
-		shine -= 0.04;
+		shine -= 0.03;
 	}
 	if (shine > upbound){
 		g = false;
@@ -154,9 +158,9 @@ void planetMovement(){
 void Idle() {
 	if (animate) {
 
-		shine(shineSize, grow, 460, 440);
+		shine(shineSize, grow, 54, 51);
 		for (int i = 0 ; i < STARS ; i++) {
-			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 6, 3);
+			shine(starSystem.starsShineSize[i], starSystem.starsgrow[i], 3.5, 1);
 		}
 		planetMovement();
 	}
