@@ -17,7 +17,7 @@ static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
 static float shineSize = 50.0;
-static float rotz = -600;
+// static float rotz = -600;
 static float rotx = 0.0;
 static float angle = 0.0;
 
@@ -61,7 +61,7 @@ void createStars() {
 		starSystem.starsShineSize[i] = 1;
 		starSystem.starsPosition[i].x = rand()%800-400;
 		starSystem.starsPosition[i].y = rand()%800-400;
-		starSystem.starsPosition[i].z = - 600;
+		starSystem.starsPosition[i].z = -600;
 	}
 }
 
@@ -108,7 +108,7 @@ void Render() {
 	glPushMatrix();
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle, 0, 1, 0);
-		glTranslatef(0, 0, 120);
+		glTranslatef(0, 0, 110);
 
 		glRotatef(rotx, 0, 1, 0);
 		
