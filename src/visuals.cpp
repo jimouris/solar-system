@@ -10,14 +10,17 @@
 
 myModel md;
 static float tx = 0.0;
+static float ty = 0.0;
 static bool animate = true;
 static float red = 1.0;
 static float green = 0.0;
 static float blue = 0.0;
 static bool grow = true;
 static float shineSize = 50.0;
-static float rotx = 0.0;
-static float angle = 0.0;
+static float rotx = 0.0, rotx2 = 0.0,rotx3 = 0.0,rotx4 = 0.0;
+static float angle = 0.0,angle2 = 0.0,angle3 = 0.0,angle4 = 0.0;
+static float anglex = 0.0, angley = 0.0;
+
 
 Stars starSystem;
 Planets planetSystem;
@@ -76,6 +79,14 @@ void Render() {
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
+		glTranslatef(0, 0, -500);
+		glRotatef(anglex, 1, 0, 0);
+		glRotatef(angley, 0, 1, 0);
+		glTranslatef(0, 0, 600);
+
+	//glTranslatef(0, 0, 0);
+	glPopMatrix();
+
 	Point pos, col;
 	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
 	col.x = 1.0; col.y = 0.8; col.z = 0.0;
@@ -99,7 +110,7 @@ void Render() {
 		p.x = 100; p.y = 0; p.z = -500;
 		glColor3f(0.7, 0.3, 0.1);
 
-		glTranslatef(0, 0, -500); 
+		glTranslatef(0, 0, -700); 
 		glRotatef(angle, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
@@ -109,6 +120,57 @@ void Render() {
 		glRotatef(rotx, 0, 1, 0);
 		DisplayModel(md, p, 0.04);
 	glPopMatrix();
+
+	glPushMatrix();
+		Point p3;
+		p3.x = 0; p3.y = -20; p3.z = -500;
+		glColor3f(0.3, 0.9, 0.4);
+
+		glTranslatef(0, 0, -500); 
+		glRotatef(angle3, 1, 0, 0);
+		glTranslatef(0, 0, 600);
+
+		glTranslatef(p3.x, p3.y, p3.z);
+		glScalef(0.02, 0.02, 0.02);
+		
+		glRotatef(rotx3, 0, 1, 0);
+		DisplayModel(md, p3, 0.04);
+	glPopMatrix();
+
+
+	glPushMatrix();
+		Point p2;
+		p2.x = -120; p2.y = 0; p2.z = -500;
+		glColor3f(0.9, 0.5, 0.7);
+
+		glTranslatef(0, 0, -500); 
+		glRotatef(angle2, 0, 1, 0);
+		glTranslatef(0, 0, 400);
+
+		glTranslatef(p2.x, p2.y, p2.z);
+		glScalef(0.06, 0.06, 0.06);
+		
+		glRotatef(rotx2, 0, 1, 0);
+		DisplayModel(md, p2, 0.04);
+	glPopMatrix();
+
+	glPushMatrix();
+		Point p4;
+		p4.x = 0; p4.y = 50; p4.z = -500;
+		glColor3f(0.5, 0.3, 0.7);
+
+		glTranslatef(0, 0, -500); 
+		glRotatef(angle4, 1, 0, 0);
+		glTranslatef(0, 0, 600);
+
+		glTranslatef(p4.x, p4.y, p4.z);
+		glScalef(0.01, 0.01, 0.01);
+		
+		glRotatef(rotx4, 0, 1, 0);
+		DisplayModel(md, p4, 0.04);
+	glPopMatrix();
+
+
 
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
@@ -143,8 +205,17 @@ void shine(float &shine, bool &g, float upbound, float lowbound, float dt) {
 }
 
 void planetMovement(){
-	rotx += 10;
+	rotx += 5;
 	angle += 0.5;
+
+	rotx2 += 5;
+	angle2 += 0.5;
+
+	rotx3 += 20;
+	angle3 += 0.9;
+
+	rotx4 += 20;
+	angle4 += 0.9;
 }
 
 void Idle() {
@@ -165,11 +236,21 @@ void Keyboard(unsigned char key, int x, int y) {
 		case 'Q':
 			exit(0);
 			break;
+		case'A':
 		case 'a':
-			tx -= 0.5f;
+			angley += 0.5f;
 			break;
+		case 'D':
 		case 'd':
-			tx += 0.5f;
+			angley -= 0.5f;
+			break;
+		case 'W':
+		case 'w':
+			anglex += 0.5f;
+			break;
+		case 'S':
+		case 's':
+			anglex -= 0.5f;
 			break;
 		default:
 			break;
