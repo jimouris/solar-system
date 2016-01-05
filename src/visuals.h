@@ -60,34 +60,21 @@ public:
 };
 
 
-//-------- Functions --------------------------------
-
-void Render();
-// The function responsible for drawing everything in the 
-// OpenGL context associated to a window. 
-
+void Render(void);
 void Resize(int, int);
-// Handle the window size changes and define the world coordinate 
-// system and projection type
-
 void Setup(char *);
-// Set up the OpenGL state machine and create a light source
-
-void Idle();
-
+void Idle(void);
 void ReadFile(char *);
-//Function for reading a model file
-
-void DisplayModel(myModel, Point, float);
-// Function for displaying a model
-
+void DisplayModel(myModel);
 void Keyboard(unsigned char, int, int);
-// Function for handling keyboard events.
-
 void Mouse(int, int, int, int); 
-// Function for handling mouse events
 void MenuSelect(int);
-
 void createSun(void);
+void createLightSource(float, float, Point, Point, Light_t);
+void createStars(void);
+void drawStars(void);
+void shine(float &, bool &, float, float, float);
+void planetMovement(void);
 
 #endif
+

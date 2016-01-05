@@ -54,7 +54,7 @@ void createLightSource(float planetSize, float shineInitSize, Point position, Po
 	glPopMatrix();
 }
 
-void createStars() {
+void createStars(void) {
 	srand((unsigned) time(NULL));
 	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
 	for (int i = 0 ; i < STARS ; i++) {
@@ -67,13 +67,13 @@ void createStars() {
 	}
 }
 
-void drawStars() {
+void drawStars(void) {
 	for (int i = 0 ; i < STARS ; i++) {
 		createLightSource(starSystem.starsSize[i], starSystem.starsShineSize[i], starSystem.starsPosition[i], starSystem.colour, STAR);	
 	}
 }
 
-void Render() {    
+void Render(void) {    
 	//CLEARS FRAME BUFFER ie COLOR BUFFER& DEPTH BUFFER (1.0)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clean up the colour of the window and the depth buffer
 	glMatrixMode(GL_MODELVIEW); 
@@ -84,25 +84,11 @@ void Render() {
 		glRotatef(angley, 0, 1, 0);
 		glTranslatef(0, 0, 600);
 
-	//glTranslatef(0, 0, 0);
-	glPopMatrix();
-
 	Point pos, col;
 	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
 	col.x = 1.0; col.y = 0.8; col.z = 0.0;
 	createLightSource(50, shineSize, pos, col, SUN);
 	drawStars();
-
-
-	// for(int i=0; i<2; i++){
-	// 	planetSystem.planetPos[i].x = rand()%500 - 250;
-	// 	planetSystem.planetPos[i].y = rand()%500 - 250;
-	// 	planetSystem.planetPos[i].z = rand()%500 - 250;
-	// 	glTranslatef(0, 0, -500);
-	// 	//glScalef(1000,1000,1000);
-	// 	glColor3f(0.75, 0.35, 0.05);
-	// 	glutSolidSphere(planetSystem.planetPos[i].x, planetSystem.planetPos[i].y, planetSystem.planetPos[i].z);
-	// }
 
 	/* Rotate planet */
 	glPushMatrix();
@@ -118,7 +104,7 @@ void Render() {
 		glScalef(0.04, 0.04, 0.04);
 		
 		glRotatef(rotx, 0, 1, 0);
-		DisplayModel(md, p1, 0.04);
+		DisplayModel(md);
 	glPopMatrix();
 
 	glPushMatrix();
@@ -134,9 +120,8 @@ void Render() {
 		glScalef(0.02, 0.02, 0.02);
 		
 		glRotatef(rotx3, 0, 1, 0);
-		DisplayModel(md, p2, 0.04);
+		DisplayModel(md);
 	glPopMatrix();
-
 
 	glPushMatrix();
 		Point p3;
@@ -151,7 +136,7 @@ void Render() {
 		glScalef(0.06, 0.06, 0.06);
 		
 		glRotatef(rotx2, 0, 1, 0);
-		DisplayModel(md, p3, 0.04);
+		DisplayModel(md);
 	glPopMatrix();
 
 	glPushMatrix();
@@ -167,10 +152,8 @@ void Render() {
 		glScalef(0.01, 0.01, 0.01);
 		
 		glRotatef(rotx4, 0, 1, 0);
-		DisplayModel(md, p4, 0.04);
+		DisplayModel(md);
 	glPopMatrix();
-
-
 
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
@@ -204,7 +187,7 @@ void shine(float &shine, bool &g, float upbound, float lowbound, float dt) {
 	}
 }
 
-void planetMovement(){
+void planetMovement(void) {
 	rotx += 5;
 	angle += 0.5;
 
@@ -218,7 +201,7 @@ void planetMovement(){
 	angle4 += 0.9;
 }
 
-void Idle() {
+void Idle(void) {
 	if (animate) {
 		shine(shineSize, grow, 54, 51, 0.03);
 		for (int i = 0 ; i < STARS ; i++) {
@@ -374,10 +357,8 @@ void ReadFile(char *path) {
 	fclose(file);
 }
 
-void DisplayModel(myModel md, Point position, float size) {
+void DisplayModel(myModel md) {
 	glPushMatrix();
-		// glTranslatef(position.x, position.y, position.z);
-		// glScalef(size, size, size);
 
 		glBegin(GL_TRIANGLES);
 			for (int i = 0; i < md.faces; i++) {
