@@ -106,58 +106,58 @@ void Render() {
 
 	/* Rotate planet */
 	glPushMatrix();
-		Point p;
-		p.x = 100; p.y = 0; p.z = -500;
-		glColor3f(0.7, 0.3, 0.1);
+		Point p1;
+		p1.x = 100; p1.y = 0; p1.z = -500;
+		glColor3f(0.8, 0.1, 0.1);
 
 		glTranslatef(0, 0, -700); 
 		glRotatef(angle, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
-		glTranslatef(p.x, p.y, p.z);
+		glTranslatef(p1.x, p1.y, p1.z);
 		glScalef(0.04, 0.04, 0.04);
 		
 		glRotatef(rotx, 0, 1, 0);
-		DisplayModel(md, p, 0.04);
+		DisplayModel(md, p1, 0.04);
 	glPopMatrix();
 
 	glPushMatrix();
-		Point p3;
-		p3.x = 0; p3.y = -20; p3.z = -500;
-		glColor3f(0.3, 0.9, 0.4);
+		Point p2;
+		p2.x = 0; p2.y = -20; p2.z = -500;
+		glColor3f(0.2, 0.8, 0.2);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle3, 1, 0, 0);
 		glTranslatef(0, 0, 600);
 
-		glTranslatef(p3.x, p3.y, p3.z);
+		glTranslatef(p2.x, p2.y, p2.z);
 		glScalef(0.02, 0.02, 0.02);
 		
 		glRotatef(rotx3, 0, 1, 0);
-		DisplayModel(md, p3, 0.04);
+		DisplayModel(md, p2, 0.04);
 	glPopMatrix();
 
 
 	glPushMatrix();
-		Point p2;
-		p2.x = -120; p2.y = 0; p2.z = -500;
-		glColor3f(0.9, 0.5, 0.7);
+		Point p3;
+		p3.x = -120; p3.y = 0; p3.z = -500;
+		glColor3f(0.3, 0.2, 0.1);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle2, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
-		glTranslatef(p2.x, p2.y, p2.z);
+		glTranslatef(p3.x, p3.y, p3.z);
 		glScalef(0.06, 0.06, 0.06);
 		
 		glRotatef(rotx2, 0, 1, 0);
-		DisplayModel(md, p2, 0.04);
+		DisplayModel(md, p3, 0.04);
 	glPopMatrix();
 
 	glPushMatrix();
 		Point p4;
 		p4.x = 0; p4.y = 50; p4.z = -500;
-		glColor3f(0.5, 0.3, 0.7);
+		glColor3f(0.3, 0.3, 0.6);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle4, 1, 0, 0);
