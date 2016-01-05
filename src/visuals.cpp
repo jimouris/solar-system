@@ -9,8 +9,6 @@
 #include "visuals.h"   // Header file for our OpenGL functions
 
 myModel md;
-static float tx = 0.0;
-static float ty = 0.0;
 static bool animate = true;
 static float red = 1.0;
 static float green = 0.0;
@@ -79,10 +77,10 @@ void Render(void) {
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
-		glTranslatef(0, 0, -500);
+		glTranslatef(0, 0, -515);
 		glRotatef(anglex, 1, 0, 0);
 		glRotatef(angley, 0, 1, 0);
-		glTranslatef(0, 0, 600);
+		glTranslatef(0, 0, 515);
 
 	Point pos, col;
 	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
@@ -94,9 +92,9 @@ void Render(void) {
 	glPushMatrix();
 		Point p1;
 		p1.x = 100; p1.y = 0; p1.z = -500;
-		glColor3f(0.8, 0.1, 0.1);
+		glColor3f(0.9, 0.1, 0.1);
 
-		glTranslatef(0, 0, -700); 
+		glTranslatef(0, 0, -500); 
 		glRotatef(angle, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
