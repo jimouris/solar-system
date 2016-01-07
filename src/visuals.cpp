@@ -61,7 +61,7 @@ void createStars(void) {
 		starSystem.starsShineSize[i] = starSystem.starsSize[i];
 		starSystem.starsPosition[i].x = rand()%800-400;
 		starSystem.starsPosition[i].y = rand()%800-400;	/* [-400, 400] */
-		starSystem.starsPosition[i].z = rand()%400-800; /* [-800, -400] */
+		starSystem.starsPosition[i].z = rand()%600-800; /* [-800, -200] */
 	}
 }
 
