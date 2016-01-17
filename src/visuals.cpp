@@ -92,7 +92,6 @@ void Render(void) {
 	glPushMatrix();
 		Point p1;
 		p1.x = 100; p1.y = 0; p1.z = -500;
-		glColor3f(0.9, 0.1, 0.1);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle, 0, 1, 0);
@@ -102,13 +101,13 @@ void Render(void) {
 		glScalef(0.04, 0.04, 0.04);
 		
 		glRotatef(rotx, 0, 1, 0);
+		glColor3f(0.9, 0.1, 0.1);
 		DisplayModel(md);
 	glPopMatrix();
 
 	glPushMatrix();
 		Point p2;
 		p2.x = 0; p2.y = -20; p2.z = -500;
-		glColor3f(0.2, 0.8, 0.2);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle3, 1, 0, 0);
@@ -118,13 +117,13 @@ void Render(void) {
 		glScalef(0.02, 0.02, 0.02);
 		
 		glRotatef(rotx3, 0, 1, 0);
+		glColor3f(0.2, 0.8, 0.2);
 		DisplayModel(md);
 	glPopMatrix();
 
 	glPushMatrix();
 		Point p3;
 		p3.x = -120; p3.y = 0; p3.z = -500;
-		glColor3f(0.3, 0.2, 0.1);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle2, 0, 1, 0);
@@ -133,14 +132,14 @@ void Render(void) {
 		glTranslatef(p3.x, p3.y, p3.z);
 		glScalef(0.06, 0.06, 0.06);
 		
-		glRotatef(rotx2, 0, 1, 0);
+		 glRotatef(rotx2, 0, 1, 0);
+		glColor3f(0.3, 0.2, 0.1);
 		DisplayModel(md);
 	glPopMatrix();
 
 	glPushMatrix();
 		Point p4;
 		p4.x = 0; p4.y = 50; p4.z = -500;
-		glColor3f(0.3, 0.3, 0.6);
 
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle4, 1, 0, 0);
@@ -150,6 +149,7 @@ void Render(void) {
 		glScalef(0.01, 0.01, 0.01);
 		
 		glRotatef(rotx4, 0, 1, 0);
+		glColor3f(0.3, 0.3, 0.6);
 		DisplayModel(md);
 	glPopMatrix();
 
@@ -189,12 +189,15 @@ void planetMovement(void) {
 	rotx += 5;
 	angle += 0.5;
 
-	rotx2 += 5;
+	
+	rotx2 += 20;
 	angle2 += 0.5;
 
-	rotx3 += 20;
+	
+	rotx3 += 5;
 	angle3 += 0.9;
 
+	
 	rotx4 += 20;
 	angle4 += 0.9;
 }
@@ -254,7 +257,7 @@ void Setup(char *path) {
 	glShadeModel(GL_SMOOTH);
 	
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);  //renders a fragment if its z value is less or equal of the stored value
+	//glDepthFunc(GL_LEQUAL);  //renders a fragment if its z value is less or equal of the stored value
 	glClearDepth(1);
 
 	// polygon rendering mode
@@ -274,13 +277,16 @@ void Setup(char *path) {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight );
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	// glEnable(GL_LIGHTING);
+	// glEnable(GL_LIGHT0);
+	// glEnable(GL_BLEND); 
 
-	// glEnable(GL_COLOR_MATERIAL);
-	// glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
+	 // glEnable(GL_COLOR_MATERIAL);
+	 // glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
 
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+	//glEnable(GL_NORMALIZE);
 	
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
@@ -358,11 +364,13 @@ void ReadFile(char *path) {
 void DisplayModel(myModel md) {
 	glPushMatrix();
 
+		//glColor3f(0, 1, 0);
 		glBegin(GL_TRIANGLES);
 			for (int i = 0; i < md.faces; i++) {
-				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
-				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
-				glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
+				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
+				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
+				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
+				
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
@@ -371,3 +379,4 @@ void DisplayModel(myModel md) {
 
 	glPopMatrix();
 }
+//
