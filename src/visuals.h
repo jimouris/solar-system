@@ -18,6 +18,7 @@ using namespace std;
 #define FACES 18240
 #define CAM_FAR 10000
 #define STARS 80
+#define NORMAL_PLANETS 0
 
 enum Light_t {SUN, STAR};
 

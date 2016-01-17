@@ -19,7 +19,6 @@ static float rotx = 0.0, rotx2 = 0.0,rotx3 = 0.0,rotx4 = 0.0;
 static float angle = 0.0,angle2 = 0.0,angle3 = 0.0,angle4 = 0.0;
 static float anglex = 0.0, angley = 0.0;
 
-
 Stars starSystem;
 Planets planetSystem;
 
@@ -277,12 +276,14 @@ void Setup(char *path) {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight );
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-	// glEnable(GL_LIGHTING);
-	// glEnable(GL_LIGHT0);
-	// glEnable(GL_BLEND); 
+	if (NORMAL_PLANETS) {
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_BLEND); 
 
-	 // glEnable(GL_COLOR_MATERIAL);
-	 // glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
+	}
 
 	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
@@ -367,10 +368,11 @@ void DisplayModel(myModel md) {
 		//glColor3f(0, 1, 0);
 		glBegin(GL_TRIANGLES);
 			for (int i = 0; i < md.faces; i++) {
-				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
-				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
-				// glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
-				
+				if (NORMAL_PLANETS) {
+					glNormal3f(md.obj_normals[md.obj_norm[i].vtx[0]-1].x, md.obj_normals[md.obj_norm[i].vtx[0]-1].y, md.obj_normals[md.obj_norm[i].vtx[0]-1].z);
+					glNormal3f(md.obj_normals[md.obj_norm[i].vtx[1]-1].x, md.obj_normals[md.obj_norm[i].vtx[1]-1].y, md.obj_normals[md.obj_norm[i].vtx[1]-1].z);
+					glNormal3f(md.obj_normals[md.obj_norm[i].vtx[2]-1].x, md.obj_normals[md.obj_norm[i].vtx[2]-1].y, md.obj_normals[md.obj_norm[i].vtx[2]-1].z);
+				}
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[0]-1].x, md.obj_points[md.obj_faces[i].vtx[0]-1].y, md.obj_points[md.obj_faces[i].vtx[0]-1].z);
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[1]-1].x, md.obj_points[md.obj_faces[i].vtx[1]-1].y, md.obj_points[md.obj_faces[i].vtx[1]-1].z);
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
