@@ -5,18 +5,15 @@
 #include <iostream>
 #include <time.h>
 
-#include "GL/glut.h"   // - An interface and windows management library
-#include "visuals.h"   // Header file for our OpenGL functions
+#include "GL/glut.h"
+#include "visuals.h"
 
-myModel md;
+Model md;
 static bool animate = true;
-static float red = 1.0;
-static float green = 0.0;
-static float blue = 0.0;
 static bool grow = true;
 static float shineSize = 50.0;
-static float rotx = 0.0, rotx2 = 0.0,rotx3 = 0.0,rotx4 = 0.0;
-static float angle = 0.0,angle2 = 0.0,angle3 = 0.0,angle4 = 0.0;
+static float rotx1 = 0.0, rotx2 = 0.0, rotx3 = 0.0, rotx4 = 0.0;
+static float angle1 = 0.0, angle2 = 0.0, angle3 = 0.0, angle4 = 0.0;
 static float anglex = 0.0, angley = 0.0;
 
 Stars starSystem;
@@ -56,7 +53,7 @@ void createStars(void) {
 	starSystem.colour.x = 1; starSystem.colour.y = 1; starSystem.colour.z = 1;
 	for (int i = 0 ; i < STARS ; i++) {
 		starSystem.starsgrow[i] = true;
-		starSystem.starsSize[i] = rand()%2+0.5;
+		starSystem.starsSize[i] = rand()%2+0.2;
 		starSystem.starsShineSize[i] = starSystem.starsSize[i];
 		starSystem.starsPosition[i].x = rand()%800-400;
 		starSystem.starsPosition[i].y = rand()%800-400;	/* [-400, 400] */
@@ -76,10 +73,10 @@ void Render(void) {
 	glMatrixMode(GL_MODELVIEW); 
 	glLoadIdentity();
 
-		glTranslatef(0, 0, -515);
-		glRotatef(anglex, 1, 0, 0);
-		glRotatef(angley, 0, 1, 0);
-		glTranslatef(0, 0, 515);
+	glTranslatef(0, 0, -515);
+	glRotatef(anglex, 1, 0, 0);
+	glRotatef(angley, 0, 1, 0);
+	glTranslatef(0, 0, 515);
 
 	Point pos, col;
 	pos.x = 0.0; pos.y = 0.0; pos.z = -515;
@@ -87,59 +84,58 @@ void Render(void) {
 	createLightSource(50, shineSize, pos, col, SUN);
 	drawStars();
 
-	/* Rotate planet */
+	/* Red planet */
 	glPushMatrix();
 		Point p1;
 		p1.x = 100; p1.y = 0; p1.z = -500;
-
 		glTranslatef(0, 0, -500); 
-		glRotatef(angle, 0, 1, 0);
+		glRotatef(angle1, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
 		glTranslatef(p1.x, p1.y, p1.z);
 		glScalef(0.04, 0.04, 0.04);
 		
-		glRotatef(rotx, 0, 1, 0);
+		glRotatef(rotx1, 0, 1, 0);
 		glColor3f(0.9, 0.1, 0.1);
 		DisplayModel(md);
 	glPopMatrix();
 
+	/* Green planet */
 	glPushMatrix();
 		Point p2;
 		p2.x = 0; p2.y = -20; p2.z = -500;
-
 		glTranslatef(0, 0, -500); 
-		glRotatef(angle3, 1, 0, 0);
+		glRotatef(angle2, 1, 0, 0);
 		glTranslatef(0, 0, 600);
 
 		glTranslatef(p2.x, p2.y, p2.z);
 		glScalef(0.02, 0.02, 0.02);
 		
-		glRotatef(rotx3, 0, 1, 0);
+		glRotatef(rotx2, 0, 1, 0);
 		glColor3f(0.2, 0.8, 0.2);
 		DisplayModel(md);
 	glPopMatrix();
 
+	/* Light Blue planet */
 	glPushMatrix();
 		Point p3;
 		p3.x = -120; p3.y = 0; p3.z = -500;
-
 		glTranslatef(0, 0, -500); 
-		glRotatef(angle2, 0, 1, 0);
+		glRotatef(angle3, 0, 1, 0);
 		glTranslatef(0, 0, 400);
 
 		glTranslatef(p3.x, p3.y, p3.z);
 		glScalef(0.06, 0.06, 0.06);
 		
-		 glRotatef(rotx2, 0, 1, 0);
-		glColor3f(0.3, 0.2, 0.1);
+		glRotatef(rotx3, 0, 1, 0);
+		glColor3f(0.3, 0.6, 0.7);
 		DisplayModel(md);
 	glPopMatrix();
 
+	/* Blue planet */
 	glPushMatrix();
 		Point p4;
 		p4.x = 0; p4.y = 50; p4.z = -500;
-
 		glTranslatef(0, 0, -500); 
 		glRotatef(angle4, 1, 0, 0);
 		glTranslatef(0, 0, 600);
@@ -148,10 +144,9 @@ void Render(void) {
 		glScalef(0.01, 0.01, 0.01);
 		
 		glRotatef(rotx4, 0, 1, 0);
-		glColor3f(0.3, 0.3, 0.6);
+		glColor3f(0.2, 0.2, 0.6);
 		DisplayModel(md);
 	glPopMatrix();
-
 
 	glutSwapBuffers();	// All drawing commands applied to the hidden buffer, so now, bring forward the hidden buffer and hide the visible one
 }
@@ -185,20 +180,17 @@ void shine(float &shine, bool &g, float upbound, float lowbound, float dt) {
 }
 
 void planetMovement(void) {
-	rotx += 5;
-	angle += 0.5;
+	rotx1 += 2;
+	angle1 += 0.3;
 
+	rotx2 += 5;
+	angle2 += 0.7;
 	
-	rotx2 += 20;
-	angle2 += 0.5;
-
+	rotx3 += 3;
+	angle3 += 0.3;
 	
-	rotx3 += 5;
-	angle3 += 0.9;
-
-	
-	rotx4 += 20;
-	angle4 += 0.9;
+	rotx4 += 4;
+	angle4 += 0.7;
 }
 
 void Idle(void) {
@@ -209,7 +201,6 @@ void Idle(void) {
 		}
 		planetMovement();
 	}
-
 	glutPostRedisplay();
 }
 
@@ -219,7 +210,7 @@ void Keyboard(unsigned char key, int x, int y) {
 		case 'Q':
 			exit(0);
 			break;
-		case'A':
+		case 'A':
 		case 'a':
 			angley += 0.5f;
 			break;
@@ -296,33 +287,6 @@ void Setup(char *path) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void MenuSelect(int choice) {
-	switch (choice) {
-		case RED: 
-			red = 1.0; 
-			green = 0.0; 
-			blue = 0.0;
-			break;
-		case GREEN: 
-			red = 0.0; 
-			green = 1.0; 
-			blue = 0.0;
-			break;
-		case BLUE: 
-			red = 0.0; 
-			green = 0.0; 
-			blue = 1.0;
-			break;
-		case WHITE: 
-			red = 1.0; 
-			green = 1.0; 
-			blue = 1.0;
-			break;
-		default:
-			break;
-	}
-}
-
 void ReadFile(char *path) {
 	md.vertices = POINTS; 
 	md.faces = FACES;    
@@ -358,14 +322,11 @@ void ReadFile(char *path) {
 			j++;
 		}
 	}
-
 	fclose(file);
 }
 
-void DisplayModel(myModel md) {
+void DisplayModel(Model md) {
 	glPushMatrix();
-
-		//glColor3f(0, 1, 0);
 		glBegin(GL_TRIANGLES);
 			for (int i = 0; i < md.faces; i++) {
 				if (NORMAL_PLANETS) {
@@ -378,7 +339,5 @@ void DisplayModel(myModel md) {
 				glVertex3f(md.obj_points[md.obj_faces[i].vtx[2]-1].x, md.obj_points[md.obj_faces[i].vtx[2]-1].y, md.obj_points[md.obj_faces[i].vtx[2]-1].z);
 			}
 		glEnd();
-
 	glPopMatrix();
 }
-//

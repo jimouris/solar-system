@@ -2,10 +2,6 @@
 #include <GL/glut.h>
 #include "visuals.h"
 
-/* State Variables */
-
-/* Main Program */
-
 int main(int argc, char *argv[]) {
     /* initialize GLUT library state */
     glutInit(&argc, argv);
@@ -17,7 +13,7 @@ int main(int argc, char *argv[]) {
     // - Allocate a Depth-Buffer in the system memory or 
     //   in the video memory if 3D acceleration available	
     //RGBA//DEPTH BUFFER//DOUBLE BUFFER//
-    glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 
 
     // Define the main window size and initial position 
@@ -36,23 +32,12 @@ int main(int argc, char *argv[]) {
         Setup(argv[1]);
     }
 
-    // Callbacks for the GL and GLUT events:
-
     // The rendering function 
     glutDisplayFunc(Render);
     glutReshapeFunc(Resize);
     glutIdleFunc(Idle);
     glutKeyboardFunc(Keyboard);
     glutMouseFunc(Mouse);
-
-    glutCreateMenu(MenuSelect);
-    glutAddMenuEntry("Red", RED);
-    glutAddMenuEntry("Blue", BLUE);
-    glutAddMenuEntry("Green", GREEN);
-    glutAddMenuEntry("White", WHITE);
-
-    /* attach the menu to the right button */
-    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
     /* Enter main event handling loop */
     glutMainLoop();

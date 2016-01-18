@@ -1,11 +1,10 @@
 #ifndef __VISUALS__
 #define __VISUALS__ 
 
-#include <stdio.h>     // - Just for some ASCII messages
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <iostream>
-#include <fstream>
 
 using namespace std;
 
@@ -22,12 +21,11 @@ using namespace std;
 
 enum Light_t {SUN, STAR};
 
-class Point {
-public:
+typedef struct Point {
 	float x; 
 	float y; 
 	float z;
-};
+} Point;
 
 typedef struct Face{
 	int vtx[3];
@@ -42,13 +40,13 @@ public:
 	Point colour;
 };
 
-class Planets{
+class Planets {
 public:
 	Point planetPos[4];
 	Point colour[4];
-
 };
-class myModel {
+
+class Model {
 public:
 	Point obj_points[POINTS]; /* all v */
 	Point obj_normals[FACES]; /* all f */
@@ -60,13 +58,12 @@ public:
 	Point position;
 };
 
-
 void Render(void);
 void Resize(int, int);
 void Setup(char *);
 void Idle(void);
 void ReadFile(char *);
-void DisplayModel(myModel);
+void DisplayModel(Model);
 void Keyboard(unsigned char, int, int);
 void Mouse(int, int, int, int); 
 void MenuSelect(int);
@@ -78,4 +75,3 @@ void shine(float &, bool &, float, float, float);
 void planetMovement(void);
 
 #endif
-
