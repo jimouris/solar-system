@@ -1,3 +1,5 @@
+[![License MIT][badge-license]](LICENSE.txt)
+
 # Solar System
 An imaginary solar system implemented in opengl
 
@@ -12,3 +14,5 @@ An imaginary solar system implemented in opengl
 8. libgl1-mesa-dev
 
 Then just type "make" in order to compile the project.
+
+[badge-license]: https://img.shields.io/badge/license-MIT-green.svg
