@@ -15,4 +15,6 @@ An imaginary solar system implemented in opengl
 
 Then just type "make" in order to compile the project.
 
+![alt tag](https://github.com/jimouris/solar-system/blob/master/screenshots/normals_screenshot.png)
+
 [badge-license]: https://img.shields.io/badge/license-MIT-green.svg
