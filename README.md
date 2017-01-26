@@ -1,6 +1,4 @@
-[![License MIT][badge-license]](LICENSE.txt)
-
-# Solar System
+# Solar System [![License MIT][badge-license]](LICENSE.txt)
 An imaginary solar system implemented in opengl
 
 ##### To install opengl in Ubuntu you need the following liibraries:
@@ -17,4 +15,4 @@ Then just type "make" in order to compile the project.
 
 ![alt tag](https://github.com/jimouris/solar-system/blob/master/screenshots/normals_screenshot.png)
 
-[badge-license]: https://img.shields.io/badge/license-MIT-green.svg
+[badge-license]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
